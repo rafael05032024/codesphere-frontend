@@ -1,0 +1,192 @@
+.container {
+  display: flex;
+
+
+  flex-direction: column;
+
+  width: 100%;
+  height: 100%;
+
+  gap: 10px;
+
+  .header {
+    width: 100%;
+    height: 48px;
+
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    background-color: white;
+
+    .user-profile {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+
+      font-size: .4rem !important;
+
+      img {
+        border-radius: 50%;
+      }
+    }
+  }
+
+  .content-container {
+    width: 100%;
+    height: 100%;
+
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .content {
+      width: 100%;
+      max-width: 980px;
+      min-height: 500px;
+
+      display: flex;
+      gap: 20px;
+      padding: 30px;
+
+      background-color: white;
+
+      border-radius: 5px;
+
+      .content-aside {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+
+        .user-profile {
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+
+          .user-name {
+            text-align: center;
+            font-size: .5rem;
+            font-weight: lighter;
+          }
+
+        }
+
+        .user-info {
+          font-size: .39rem;
+          font-weight: lighter;
+          color: #454545;
+
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+
+          padding: 10px;
+          border: .2px solid #bbbbbb;
+          border-radius: 2px;
+        }
+
+      }
+
+      .content-main {
+        width: 100%;
+
+        .page-title {
+          width: 100%;
+
+          .page-title-container {
+            width: 100%;
+            padding: 10px;
+
+            position: relative;
+
+            display: flex;
+            align-items: center;
+            justify-content: start;
+            gap: 10px;
+
+            .search-icon {
+              height: 10px;
+              width: 10px;
+              background-color: #ef4500;
+            }
+
+            h1 {
+              color: #ef4500;
+              font-size: .6rem;
+
+              text-transform: uppercase;
+            }
+          }
+
+
+          font-family: 'BryantMedium';
+          border: .2px solid #bbbbbb;
+
+          margin-bottom: 10px;
+
+          p {
+            text-transform: uppercase;
+            border-top: #bbb solid 1px;
+            background: #f3f3f3;
+            font-size: 0.3rem;
+            padding: 8px 10px;
+          }
+        }
+
+        .card {
+          height: 100px;
+          width: 350px;
+          border: .2px solid #bbbbbb;
+          padding: 15px;
+
+          display: flex;
+          gap: 40px;
+
+          font-size: .5rem;
+          border-bottom: 2px solid #1abc9c;
+
+          .card-aside {
+            font-family: 'SketchRockwell';
+            color: #1abc9c;
+            font-size: 3rem;
+
+            display: flex;
+            align-items: center;
+          }
+
+          .card-content {
+            font-family: 'BryantMedium';
+
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 5px;
+
+            .card-content-title {
+              text-transform: uppercase;
+              font-size: .5rem;
+              color: #1abc9c;
+
+            }
+
+            .card-content-body {
+              font-size: .4rem;
+            }
+
+            .card-content-footer {
+              text-transform: uppercase;
+              font-size: .35rem;
+              color: #1abc9c;
+            }
+          }
+        }
+      }
+    }
+  }
+}

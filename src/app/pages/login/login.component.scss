@@ -1,0 +1,28 @@
+.container {
+  background-color: #fff;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 100%;
+
+  .login-container {
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
+
+    .button {
+      padding: 15px;
+
+      cursor: pointer;
+
+      background-color: #52af18;
+
+      border-radius: 5px;
+
+      color: #fff;
+    }
+  }
+}
