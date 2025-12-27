@@ -1,0 +1,62 @@
+main {
+  .compilation-info-container {
+    border: 1px solid #BBB;
+
+    margin-bottom: 10px;
+
+    h3 {
+      padding: 7px 20px;
+      text-align: left;
+      background: #f3f3f3;
+      border-bottom: #BBB solid 1px;
+
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .compilation-data-container {
+      font-size: .38rem;
+
+      padding: 10px;
+
+      .compilation-data {
+        margin-top: 10px;
+
+        width: 300px;
+
+
+        display: flex;
+        justify-content: space-between;
+
+        .label {
+          text-transform: uppercase;
+        }
+
+        .value {
+          width: 115px;
+        }
+      }
+    }
+  }
+
+  .code-container {
+    border: 1px solid #BBB;
+
+    .editor {
+      border: 1px solid #ddd;
+      font-size: 14px;
+    }
+
+    h3 {
+      padding: 7px 20px;
+      text-align: center;
+      background: #f3f3f3;
+      border-bottom: #BBB solid 1px;
+
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+  }
+}
