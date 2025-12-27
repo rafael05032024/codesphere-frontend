@@ -17,6 +17,6 @@ export class APIService extends SsrDataLoader {
   public sigInWithGitHub(): void {
     const origin = `${window.location.href}auth`;
 
-    window.location.href = `${this._baseUrl}/auth/github/login?redirect=${origin}`;
+    //window.location.href = `${this._baseUrl}/auth/github/login?redirect=${origin}`;
   }
 }

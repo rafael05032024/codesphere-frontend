@@ -1,0 +1,205 @@
+main {
+  display: flex;
+  gap: 10px;
+
+  .problem-container {
+    max-width: 700px;
+    border: 1px solid #bbbbbb;
+    border-radius: 3px;
+
+    padding: 10px;
+  }
+
+  .submission-container {
+    width: 100%;
+
+    font-size: 0.4rem;
+
+    .select-container {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+
+      margin-bottom: 10px;
+
+      select {
+        width: 100%;
+
+        font-size: 0.4rem;
+
+        height: 30px;
+        max-width: 85px;
+      }
+    }
+
+    .submission-footer {
+      display: flex;
+      gap: 5px;
+
+      margin-top: 10px;
+
+      .box-information {
+        background: #f3f3f3;
+        border: 1px solid #BBB;
+        border-bottom: #BBB solid 3px;
+        border-radius: 3px;
+        padding: 10px;
+
+        flex: 1;
+
+        font-size: 0.3rem;
+        text-transform: uppercase;
+      }
+
+      button {
+        background-color: #adce07;
+
+        border: 1px solid #8fa813;
+        border-bottom: #8fa813 solid 3px;
+
+        text-transform: uppercase;
+        color: white;
+        font-size: .3rem !important;
+        font-weight: bold;
+
+        cursor: pointer;
+
+        width: 120px !important;
+      }
+    }
+  }
+}
+
+h1 {
+  font-size: 28px;
+}
+
+h2 {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 20px 0 10px;
+}
+
+p {
+  margin: 0;
+}
+
+sup,
+sub {
+  vertical-align: inherit;
+  font-size: 10px;
+  position: relative;
+}
+
+sup {
+  top: -3px;
+}
+
+sub {
+  bottom: -3px;
+}
+
+.both {
+  clear: both;
+}
+
+.header {
+  border-bottom: #BBB solid 1px;
+  margin: 0 0 20px;
+  padding: 0 0 20px;
+  text-align: center;
+}
+
+.header span {
+  color: #777;
+  font-size: 12px;
+}
+
+.header h1 {
+  font-weight: bold;
+  margin: 5px 0;
+}
+
+.header div {
+  color: #777;
+  font-size: 12px;
+  margin: 0 0 5px;
+}
+
+.header strong {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.problem {
+  line-height: 20px;
+  font-size: 0.5rem;
+}
+
+.description p,
+.input p,
+.output p {
+  margin: 0 0 10px 0;
+}
+
+.problem table {
+  border-bottom: #BBB solid 1px;
+  border-collapse: collapse;
+  border-top: #BBB solid 1px;
+  margin: 15px 0;
+  width: 100%;
+}
+
+.problem table thead {
+  font-weight: bold;
+  text-align: center;
+}
+
+.problem table tbody {
+  font-family: "Courier New", Courier, "Nimbus Mono L", monospace;
+  background: #EFEFEF;
+}
+
+.problem table tbody td {
+  border-bottom: #BBB solid 1px;
+  border-top: #BBB solid 1px;
+  padding: 5px;
+  vertical-align: text-top;
+  width: 50%;
+}
+
+.division {
+  border-right: #BBB solid 1px;
+}
+
+.problem b {
+  font-weight: bold;
+}
+
+.problem i {
+  font-style: italic;
+}
+
+.problem u {
+  text-decoration: underline;
+}
+
+.problem .center {
+  text-align: center;
+}
+
+.code {
+  font-family: "Courier New", Courier, "Nimbus Mono L", monospace;
+}
+
+.footer {
+  color: #545454;
+  font-size: 10px;
+  line-height: 12px;
+}
+
+
+.editor {
+  border: 1px solid #ddd;
+  font-size: 14px;
+}
