@@ -23,6 +23,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this._isLogin = true;
     //this._isLogin = window.location.pathname === '/login';
   }
 }

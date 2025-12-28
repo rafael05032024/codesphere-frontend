@@ -1,4 +1,4 @@
-.container {
+/*.container {
   background-color: #fff;
 
   display: flex;
@@ -19,6 +19,49 @@
       cursor: pointer;
 
       background-color: #52af18;
+
+      border-radius: 5px;
+
+      color: #fff;
+    }
+  }
+}*/
+
+.container {
+  display: flex;
+
+  height: 100%;
+  width: 100%;
+
+  .logo {
+    height: 100%;
+    width: 60%;
+
+    background-image: url('../../../assets/images/bg3.png');
+    background-position: center;
+    background-size: contain;
+  }
+
+  .login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    flex: 1;
+    gap: 10px;
+
+    background-color: white;
+
+    .button {
+      padding: 15px;
+
+      width: 250px;
+
+      cursor: pointer;
+
+      background-color: #adce07;
+      border: 1px solid #8fa813;
+      border-bottom: #8fa813 solid 3px;
 
       border-radius: 5px;
 
