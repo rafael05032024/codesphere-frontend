@@ -4,6 +4,7 @@ import { AuthComponent } from './pages/login/auth/auth.component';
 import { ProblemDetailComponent } from './pages/problem-detail/problem-detail.component';
 import { SubmissionDetailComponent } from './pages/submission-detail/submission-detail.component';
 import { CategoriesComponent } from './pages/categories/categories.component';
+import { authGuard } from './shared/guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -25,6 +26,7 @@ export const routes: Routes = [
   {
     path: 'categories',
     component: CategoriesComponent,
+    canActivate: [authGuard],
     data: {
       title: 'Categorias',
       subtitle:

@@ -1,8 +1,10 @@
 .card {
   height: 100px;
-  width: 350px;
+  width: 100%;
   border: .2px solid #bbbbbb;
   padding: 15px;
+
+  cursor: pointer;
 
   display: flex;
   gap: 40px;
@@ -12,7 +14,6 @@
 
   .card-aside {
     font-family: 'SketchRockwell';
-    //color: #1abc9c;
     font-size: 3rem;
 
     display: flex;
@@ -30,7 +31,6 @@
     .card-content-title {
       text-transform: uppercase;
       font-size: .5rem;
-      //color: #1abc9c;
     }
 
     .card-content-body {
@@ -40,7 +40,6 @@
     .card-content-footer {
       text-transform: uppercase;
       font-size: .35rem;
-      //color: #1abc9c;
     }
   }
 }
