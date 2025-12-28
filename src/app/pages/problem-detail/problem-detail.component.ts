@@ -15,10 +15,10 @@ import { CodeModel } from '@ngstack/code-editor';
   selector: 'app-problem',
   standalone: true,
   imports: [],
-  templateUrl: './problem.component.html',
-  styleUrl: './problem.component.scss',
+  templateUrl: './problem-detail.component.html',
+  styleUrl: './problem-detail.component.scss',
 })
-export class ProblemComponent implements OnInit {
+export class ProblemDetailComponent implements OnInit {
   theme = 'vs-dark';
 
   model: CodeModel = {

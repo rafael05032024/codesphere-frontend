@@ -42,15 +42,15 @@
       <div class="content-main">
         <div class="page-title">
           <div class="page-title-container">
-            <div class="search-icon"></div>
-            <h1>
-              Categorias
+            <div [ngStyle]="{ backgroundColor: color }" class="search-icon"></div>
+            <h1 [ngStyle]="{ color }">
+              {{ title }}
             </h1>
 
           </div>
 
           <p>
-            Selecione uma das 9 grandes categorias de problemas para começar a resolver.
+            {{ subtitle }}
           </p>
         </div>
 
@@ -105,26 +105,6 @@
               <button class="paging-action">
                 Último
               </button>
-            </div>
-          </div>
-        </div>-->
-
-        <!--<div class="card">
-          <div class="card-aside">
-            <span>1</span>
-          </div>
-
-          <div class="card-content">
-            <div class="card-content-title">
-              <span>Iniciante</span>
-            </div>
-
-            <div class="card-content-body">
-              <p>Problemas básicos para quem está iniciando na programação...</p>
-            </div>
-
-            <div class="card-content-footer">
-              <p>139 problemas</p>
             </div>
           </div>
         </div>-->

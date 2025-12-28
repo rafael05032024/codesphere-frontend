@@ -22,7 +22,7 @@ export class AuthComponent implements OnInit {
 
       this._authContextService.token = token;
 
-      this._router.navigate(['home']);
+      this._router.navigate(['categories']);
     });
   }
 }

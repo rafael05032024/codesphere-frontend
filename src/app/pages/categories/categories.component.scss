@@ -1,0 +1,47 @@
+.card {
+  height: 100px;
+  width: 350px;
+  border: .2px solid #bbbbbb;
+  padding: 15px;
+
+  display: flex;
+  gap: 40px;
+
+  font-size: .5rem;
+  border-bottom: 2px solid #1abc9c;
+
+  .card-aside {
+    font-family: 'SketchRockwell';
+    color: #1abc9c;
+    font-size: 3rem;
+
+    display: flex;
+    align-items: center;
+  }
+
+  .card-content {
+    font-family: 'BryantMedium';
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 5px;
+
+    .card-content-title {
+      text-transform: uppercase;
+      font-size: .5rem;
+      color: #1abc9c;
+
+    }
+
+    .card-content-body {
+      font-size: .4rem;
+    }
+
+    .card-content-footer {
+      text-transform: uppercase;
+      font-size: .35rem;
+      color: #1abc9c;
+    }
+  }
+}

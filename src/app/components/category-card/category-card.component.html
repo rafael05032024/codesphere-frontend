@@ -1,0 +1,19 @@
+<div [ngStyle]="{ borderColor: color }" class="card">
+  <div [ngStyle]="{ color }" class="card-aside">
+    <span>{{ id }}</span>
+  </div>
+
+  <div class="card-content">
+    <div [ngStyle]="{ color }" class="card-content-title">
+      <span>{{ title }}</span>
+    </div>
+
+    <div class="card-content-body">
+      <p>{{ description }}</p>
+    </div>
+
+    <div [ngStyle]="{ color }" class="card-content-footer">
+      <p>{{ totalProblems}} problemas</p>
+    </div>
+  </div>
+</div>

@@ -1,9 +1,9 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './pages/login/login.component';
 import { AuthComponent } from './pages/login/auth/auth.component';
-import { HomeComponent } from './pages/home/home.component';
-import { ProblemComponent } from './pages/problem/problem.component';
+import { ProblemDetailComponent } from './pages/problem-detail/problem-detail.component';
 import { SubmissionDetailComponent } from './pages/submission-detail/submission-detail.component';
+import { CategoriesComponent } from './pages/categories/categories.component';
 
 export const routes: Routes = [
   {
@@ -16,14 +16,20 @@ export const routes: Routes = [
   },
   {
     path: 'problem',
-    component: ProblemComponent,
+    component: ProblemDetailComponent,
   },
   {
     path: 'submission',
     component: SubmissionDetailComponent,
   },
   {
-    path: '',
-    component: HomeComponent,
+    path: 'categories',
+    component: CategoriesComponent,
+    data: {
+      title: 'Categorias',
+      subtitle:
+        'Selecione uma das 9 grandes categorias de problemas para começar a resolver.',
+      color: '#ef4500',
+    },
   },
 ];
