@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { CategoryCardComponent } from '../../components/category-card/category-card.component';
 import { APIService } from '../../services/api.service';
 import { ICategory } from '../../shared/models/interfaces/category.interface';
+import { Router } from '@angular/router';
+import { PageContextService } from '../../services/page-context.service';
 
 @Component({
   selector: 'app-categories',
@@ -19,12 +21,32 @@ export class CategoriesComponent implements OnInit {
     return this._categories;
   }
 
-  constructor(private readonly _apiService: APIService) {}
+  constructor(
+    private readonly _apiService: APIService,
+    private readonly _pageContextService: PageContextService,
+    private readonly _router: Router
+  ) {}
 
   ngOnInit(): void {
     this._apiService
       .listCategories()
       .subscribe((_categories) => (this._categories = _categories));
+  }
+
+  public goToProblemList(category: ICategory) {
+    this._pageContextService.setPageContext(
+      'iniciante',
+      'Selecione um dos seguintes problemas para resolver.',
+      '#1abc9c'
+    );
+
+    this._router.navigate([`problems/${category.id}`], {
+      state: {
+        title: category.title,
+        subtitle: 'Selecione um dos seguintes problemas para resolver.',
+        color: '#1abc9c',
+      },
+    });
   }
 
   public getCardColor(id: number): string {

@@ -9,6 +9,8 @@ import { PostService } from './services/post.service';
 import { CommonModule } from '@angular/common';
 import { filter } from 'rxjs';
 import { AuthContextService } from './services/auth-context.service';
+import { PageContextService } from './services/page-context.service';
+import { UtilsService } from './services/utils-service';
 
 @Component({
   selector: 'app-root',
@@ -27,7 +29,9 @@ export class AppComponent implements OnInit {
   constructor(
     private readonly _router: Router,
     private readonly _route: ActivatedRoute,
-    private readonly _authContextService: AuthContextService
+    private readonly _utilsService: UtilsService,
+    private readonly _authContextService: AuthContextService,
+    private readonly _pageContextService: PageContextService
   ) {}
 
   get isLogin(): boolean {
@@ -47,6 +51,10 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (this._utilsService.isServer()) {
+      return;
+    }
+
     this._isLogin = true;
 
     this._router.events
@@ -65,9 +73,13 @@ export class AppComponent implements OnInit {
           route = route.firstChild;
         }
 
-        this._title = route.snapshot.data['title'];
-        this._subTitle = route.snapshot.data['subtitle'];
-        this._color = route.snapshot.data['color'];
+        this._title =
+          route.snapshot.data['title'] || this._pageContextService.pageTitle;
+        this._subTitle =
+          route.snapshot.data['subtitle'] ||
+          this._pageContextService.pageSubtitle;
+        this._color =
+          route.snapshot.data['color'] || this._pageContextService.useColor;
       });
   }
 

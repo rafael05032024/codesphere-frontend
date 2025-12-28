@@ -5,6 +5,7 @@ import { ProblemDetailComponent } from './pages/problem-detail/problem-detail.co
 import { SubmissionDetailComponent } from './pages/submission-detail/submission-detail.component';
 import { CategoriesComponent } from './pages/categories/categories.component';
 import { authGuard } from './shared/guards/auth.guard';
+import { ProblemsComponent } from './pages/problems/problems.component';
 
 export const routes: Routes = [
   {
@@ -20,6 +21,13 @@ export const routes: Routes = [
     component: ProblemDetailComponent,
   },
   {
+    path: 'problems/:category',
+    component: ProblemsComponent,
+    data: {
+      subtitle: 'Selecione um dos seguintes problemas para resolver.',
+    },
+  },
+  {
     path: 'submission',
     component: SubmissionDetailComponent,
   },
@@ -30,7 +38,7 @@ export const routes: Routes = [
     data: {
       title: 'Categorias',
       subtitle:
-        'Selecione uma das 9 grandes categorias de problemas para começar a resolver.',
+        'Selecione uma das 8 grandes categorias de problemas para começar a resolver.',
       color: '#ef4500',
     },
   },
