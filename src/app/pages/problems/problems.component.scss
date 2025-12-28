@@ -1,0 +1,92 @@
+.table-container {
+  background: rgb(243, 243, 243);
+  border: 1px solid rgb(187, 187, 187);
+
+  padding-top: 25px;
+
+  color: #454545;
+
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+
+    th {
+      font: inherit;
+      height: 24px;
+      background-color: #DDD;
+      border-top: #BBB solid 1px;
+      color: #4b4b4a;
+      font-size: 10px;
+      padding: 0 5px;
+      text-transform: uppercase;
+      vertical-align: middle
+    }
+
+    th.left {
+      text-align: left;
+    }
+
+    tr {
+      font-size: 0.4rem;
+      height: 24px;
+    }
+
+    td.id {
+      width: 10%;
+      text-align: center;
+    }
+
+    td.tiny {
+      width: 5%;
+    }
+
+    .par {
+      background-color: #fff;
+    }
+
+    .impar {
+      background: #f3f3f3;
+    }
+  }
+
+  .paging-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+
+    height: 100%;
+
+    font-size: .35rem;
+
+    button {
+      font-size: .3rem !important;
+      background-color: #fefefe;
+      padding: 4px;
+      width: 80px;
+      text-align: center;
+      border: 1px solid rgb(187, 187, 187);
+      color: #454545;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      cursor: default;
+      opacity: 0.6;
+    }
+
+    .paging-total {
+      background-color: #fefefe;
+      padding: 4px;
+      width: 150px;
+      text-align: center;
+      border: 1px solid rgb(187, 187, 187);
+    }
+
+    .paging-action-container {
+      display: flex;
+      gap: 5px;
+    }
+  }
+}

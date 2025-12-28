@@ -1,1 +1,41 @@
-<p>problems works!</p>
+<div class="table-container" *ngIf="!!problems && totalRecords">
+  <table class="table">
+    <thead>
+      <th class="left" class="id">#</th>
+      <th class="left"></th>
+      <th class="left">Nome</th>
+    </thead>
+
+    <tbody>
+      <tr [ngClass]=" (i % 2 === 0) ? 'par' : 'impar'  " *ngFor="let problem of chunks[page]; let i = index">
+        <td class="id">{{ problem.id }}</td>
+        <td>ok</td>
+        <td>{{ problem.title }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="paging-container">
+    <div class="paging-total">
+      {{ page + 1 }} of {{ totalRecords }}
+    </div>
+
+    <div class="paging-action-container">
+      <button (click)="handleFirstPage()" class="paging-action" [disabled]="page === 0">
+        Primeiro
+      </button>
+
+      <button (click)="handlePreviousPage()" class="paging-action" [disabled]="page === 0">
+        Anterior
+      </button>
+
+      <button (click)="handleNextPage()" class="paging-action" [disabled]="page >= pageCount">
+        Próximo
+      </button>
+
+      <button (click)="handleLastPage()" class="paging-action" [disabled]="page >= pageCount">
+        Último
+      </button>
+    </div>
+  </div>
+</div>

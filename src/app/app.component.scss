@@ -98,94 +98,6 @@
       .content-main {
         width: 100%;
 
-        .table-container {
-          background: rgb(243, 243, 243);
-          border: 1px solid rgb(187, 187, 187);
-
-          padding-top: 25px;
-
-          color: #454545;
-
-          .paging-container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 10px;
-
-            height: 100%;
-
-            font-size: .35rem;
-
-            button {
-              font-size: .3rem !important;
-              background-color: #fefefe;
-              padding: 4px;
-              width: 80px;
-              text-align: center;
-              border: 1px solid rgb(187, 187, 187);
-              color: #454545;
-              text-transform: uppercase;
-              cursor: pointer;
-            }
-
-            .paging-total {
-              background-color: #fefefe;
-              padding: 4px;
-              width: 150px;
-              text-align: center;
-              border: 1px solid rgb(187, 187, 187);
-            }
-
-            .paging-action-container {
-              display: flex;
-              gap: 5px;
-            }
-          }
-        }
-
-        .table {
-          width: 100%;
-          border-collapse: collapse;
-
-          th {
-            font: inherit;
-            height: 24px;
-            background-color: #DDD;
-            border-top: #BBB solid 1px;
-            color: #4b4b4a;
-            font-size: 10px;
-            padding: 0 5px;
-            text-transform: uppercase;
-            vertical-align: middle
-          }
-
-          th.left {
-            text-align: left;
-          }
-
-          tr {
-            font-size: 0.4rem;
-            height: 24px;
-          }
-
-          td.id {
-            width: 10%;
-            text-align: center;
-          }
-
-          td.tiny {
-            width: 5%;
-          }
-
-          .impar {
-            background-color: #fff;
-          }
-
-          .par {
-            background: #f3f3f3;
-          }
-        }
-
         .page-title {
           width: 100%;
 
@@ -203,11 +115,9 @@
             .search-icon {
               height: 10px;
               width: 10px;
-              //background-color: #ef4500;
             }
 
             h1 {
-             //color: #ef4500;
               font-size: .6rem;
 
               text-transform: uppercase;

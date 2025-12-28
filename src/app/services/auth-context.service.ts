@@ -13,7 +13,9 @@ export class AuthContextService {
       return this._token;
     }
 
-    this._token = localStorage.getItem(this._key) as string;
+    this._token = this._getCookie('token') as string;
+
+    console.log({ token: this._token });
 
     return this._token;
   }
@@ -21,7 +23,7 @@ export class AuthContextService {
   set token(token: string) {
     this._token = token;
 
-    localStorage.setItem(this._key, token);
+    this._setToken(token);
   }
 
   public logout(): void {
@@ -30,5 +32,25 @@ export class AuthContextService {
     localStorage.removeItem(this._key);
 
     this._router.navigate(['/login']);
+  }
+
+  private _setToken(token: string): void {
+    if (typeof document !== 'undefined') {
+      document.cookie = `token=${token}; Path=/; SameSite=Lax`;
+    }
+  }
+
+  private _getCookie(name: string): string | null {
+    if (typeof document === 'undefined') {
+      console.log('iiii');
+      return null;
+    }
+
+    return (
+      document.cookie
+        .split('; ')
+        .find((row) => row.startsWith(name + '='))
+        ?.split('=')[1] ?? null
+    );
   }
 }
