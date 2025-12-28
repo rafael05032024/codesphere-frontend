@@ -8,6 +8,7 @@ import {
 import { PostService } from './services/post.service';
 import { CommonModule } from '@angular/common';
 import { filter } from 'rxjs';
+import { AuthContextService } from './services/auth-context.service';
 
 @Component({
   selector: 'app-root',
@@ -25,7 +26,8 @@ export class AppComponent implements OnInit {
 
   constructor(
     private readonly _router: Router,
-    private readonly _route: ActivatedRoute
+    private readonly _route: ActivatedRoute,
+    private readonly _authContextService: AuthContextService
   ) {}
 
   get isLogin(): boolean {
@@ -67,5 +69,9 @@ export class AppComponent implements OnInit {
         this._subTitle = route.snapshot.data['subtitle'];
         this._color = route.snapshot.data['color'];
       });
+  }
+
+  public logout(): void {
+    this._authContextService.logout();
   }
 }
