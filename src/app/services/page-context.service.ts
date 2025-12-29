@@ -1,34 +1,23 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+
+interface IPageContext {
+  title?: string;
+  subtitle?: string;
+  color?: string;
+  hideProfile?: boolean;
+  maxWidth?: boolean;
+}
 
 @Injectable({ providedIn: 'root' })
 export class PageContextService {
-  private _pageTitle!: string;
-  private _pageSubtitle!: string;
-  private _useColor!: string;
+  private _bsPageContext = new BehaviorSubject<IPageContext | null>(null);
 
-  get pageTitle(): string {
-    return this._pageTitle ?? (localStorage.getItem('page.title') as string);
-  }
-
-  get pageSubtitle(): string {
-    return (
-      this._pageSubtitle || (localStorage.getItem('page.subtitle') as string)
-    );
-  }
-
-  get useColor(): string {
-    return this._useColor || (localStorage.getItem('page.color') as string);
-  }
+  public obsPageContext = this._bsPageContext.asObservable();
 
   constructor() {}
 
-  public setPageContext(title: string, subtitle: string, color: string) {
-    this._pageSubtitle = subtitle;
-    this._pageTitle = title;
-    this._useColor = color;
-
-    localStorage.setItem('page.title', title);
-    localStorage.setItem('page.subtitle', subtitle);
-    localStorage.setItem('page.color', color);
+  public setPageContext(context: IPageContext) {
+    this._bsPageContext.next({ ...context });
   }
 }

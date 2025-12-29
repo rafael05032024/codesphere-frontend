@@ -48,6 +48,10 @@ export class APIService extends SsrDataLoader {
     );
   }
 
+  public getProblemDetail(problemId: number): Observable<IProblem> {
+    return this._doCall<IProblem>(`${this._baseUrl}/problem/${problemId}`);
+  }
+
   private _doCall<T>(url: string): Observable<T> {
     return this.load<T>(
       this._http.get<T>(url, {

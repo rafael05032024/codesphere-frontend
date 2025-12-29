@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { APIService } from '../../services/api.service';
 import { IProblem } from '../../shared/models/interfaces/problem.interface';
 import { CommonModule } from '@angular/common';
+import { PageContextService } from '../../services/page-context.service';
 
 @Component({
   selector: 'app-problems',
@@ -42,10 +43,18 @@ export class ProblemsComponent implements OnInit {
 
   constructor(
     private readonly _route: ActivatedRoute,
-    private readonly _apiService: APIService
+    private readonly _router: Router,
+    private readonly _apiService: APIService,
+    private readonly _pageContextService: PageContextService
   ) {}
 
   ngOnInit(): void {
+    this._pageContextService.setPageContext({
+      title: 'Iniciante',
+      subtitle: 'Selecione um dos seguintes problemas para resolver.',
+      color: '#1abc9c',
+    });
+
     this._route.params.subscribe((params) => {
       const categoryId = Number(params['category']);
 
@@ -89,5 +98,9 @@ export class ProblemsComponent implements OnInit {
 
   public handlePreviousPage(): void {
     this._page--;
+  }
+
+  public goToProblemDetail(problem: IProblem): void {
+    this, this._router.navigate([`problem/${problem.id}`]);
   }
 }

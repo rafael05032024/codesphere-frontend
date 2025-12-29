@@ -1,21 +1,15 @@
 <main>
   <aside class="problem-container">
     <div class="problem">
-      <div class="description">
-        <p>Você deve fazer um programa que leia um valor qualquer e apresente uma mensagem dizendo em qual dos seguintes
-          intervalos ([0,25], (25,50], (50,75], (75,100]) este valor se encontra. Obviamente se o valor não estiver em
-          nenhum destes intervalos, deverá ser impressa a mensagem "Fora de intervalo".</p>
-        <p> O símbolo ( representa "maior que". Por exemplo:<br> [0,25]&nbsp; indica valores entre 0 e 25.0000,
-          inclusive
-          eles.<br> (25,50] indica valores maiores que 25 Ex: 25.00001 até o valor 50.0000000 </p>
+      <div class="description" [innerHTML]="descriptionText">
       </div>
       <h2>Entrada</h2>
       <div class="input">
-        <p>O arquivo de entrada contém um número com ponto flutuante qualquer.</p>
+        <p>{{ inputText }}</p>
       </div>
       <h2>Saída</h2>
       <div class="output">
-        <p>A saída deve ser uma mensagem conforme exemplo abaixo.</p>
+        <p>{{ outputText }}</p>
       </div>
       <div class="both"></div>
       <table>
@@ -25,49 +19,15 @@
             <td>Exemplo de Saída</td>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <td class="division">
-              <p>25.01</p>
-            </td>
-            <td>
-              <p>Intervalo (25,50]</p>
-            </td>
-          </tr>
-        </tbody>
       </table>
-      <table>
+      <table *ngFor="let example of examples">
         <tbody>
           <tr>
             <td class="division">
-              <p>25.00</p>
+              <p [innerHTML]="example.input"></p>
             </td>
             <td>
-              <p>Intervalo [0,25]</p>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <table>
-        <tbody>
-          <tr>
-            <td class="division">
-              <p>100.00</p>
-            </td>
-            <td>
-              <p>Intervalo (75,100]</p>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <table>
-        <tbody>
-          <tr>
-            <td class="division">
-              <p>-25.02</p>
-            </td>
-            <td>
-              <p>Fora de intervalo</p>
+              <p [innerHTML]="example.expected_output"></p>
             </td>
           </tr>
         </tbody>

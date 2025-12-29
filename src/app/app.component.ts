@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import {
   ActivatedRoute,
   NavigationEnd,
@@ -24,15 +24,20 @@ export class AppComponent implements OnInit {
   private _title!: string;
   private _subTitle!: string;
   private _color!: string;
+  private _hideProfile!: boolean;
   private _isLogin!: boolean;
+  private _useFullWidth!: boolean;
 
   constructor(
     private readonly _router: Router,
     private readonly _route: ActivatedRoute,
+    private readonly _cdr: ChangeDetectorRef,
     private readonly _utilsService: UtilsService,
     private readonly _authContextService: AuthContextService,
     private readonly _pageContextService: PageContextService
-  ) {}
+  ) {
+    this._isLogin = true;
+  }
 
   get isLogin(): boolean {
     return this._isLogin;
@@ -50,12 +55,18 @@ export class AppComponent implements OnInit {
     return this._color;
   }
 
+  get hideProfile(): boolean {
+    return this._hideProfile;
+  }
+
+  get useFullWidth(): boolean {
+    return this._useFullWidth;
+  }
+
   ngOnInit(): void {
     if (this._utilsService.isServer()) {
       return;
     }
-
-    this._isLogin = true;
 
     this._router.events
       .pipe(
@@ -73,13 +84,15 @@ export class AppComponent implements OnInit {
           route = route.firstChild;
         }
 
-        this._title =
-          route.snapshot.data['title'] || this._pageContextService.pageTitle;
-        this._subTitle =
-          route.snapshot.data['subtitle'] ||
-          this._pageContextService.pageSubtitle;
-        this._color =
-          route.snapshot.data['color'] || this._pageContextService.useColor;
+        this._pageContextService.obsPageContext.subscribe((ctx) => {
+          this._title = route.snapshot.data['title'] || ctx?.title;
+          this._subTitle = route.snapshot.data['subtitle'] || ctx?.subtitle;
+          this._color = route.snapshot.data['color'] || ctx?.color;
+          this._hideProfile = !!ctx?.hideProfile;
+          this._useFullWidth = !!ctx?.maxWidth;
+
+          this._cdr.detectChanges();
+        });
       });
   }
 

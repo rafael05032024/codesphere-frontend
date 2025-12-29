@@ -34,19 +34,7 @@ export class CategoriesComponent implements OnInit {
   }
 
   public goToProblemList(category: ICategory) {
-    this._pageContextService.setPageContext(
-      'iniciante',
-      'Selecione um dos seguintes problemas para resolver.',
-      '#1abc9c'
-    );
-
-    this._router.navigate([`problems/${category.id}`], {
-      state: {
-        title: category.title,
-        subtitle: 'Selecione um dos seguintes problemas para resolver.',
-        color: '#1abc9c',
-      },
-    });
+    this._router.navigate([`problems/${category.id}`]);
   }
 
   public getCardColor(id: number): string {

@@ -7,7 +7,8 @@
     </thead>
 
     <tbody>
-      <tr [ngClass]=" (i % 2 === 0) ? 'par' : 'impar'  " *ngFor="let problem of chunks[page]; let i = index">
+      <tr (click)="goToProblemDetail(problem)" [ngClass]=" (i % 2 === 0) ? 'par' : 'impar'  "
+        *ngFor="let problem of chunks[page]; let i = index">
         <td class="id">{{ problem.id }}</td>
         <td>ok</td>
         <td>{{ problem.title }}</td>

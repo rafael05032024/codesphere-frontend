@@ -17,7 +17,7 @@ export const routes: Routes = [
     component: AuthComponent,
   },
   {
-    path: 'problem',
+    path: 'problem/:id',
     component: ProblemDetailComponent,
   },
   {

@@ -19,8 +19,8 @@
   </div>
 
   <div class="content-container">
-    <div class="content">
-      <aside class="content-aside">
+    <div class="content" [ngStyle]="{ maxWidth: useFullWidth ? '1200px' : '980px' }">
+      <aside class="content-aside" *ngIf="!hideProfile">
 
         <div class="user-profile">
           <img src="https://lh3.googleusercontent.com/a/ACg8ocLgwHOkFA_zsvfQv7BoeKx_kAbuvFwyKSIqQvgy4vWWES69tqPt=s96-c"
