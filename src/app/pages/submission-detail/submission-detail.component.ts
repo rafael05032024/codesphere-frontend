@@ -57,9 +57,9 @@ export class SubmissionDetailComponent implements AfterViewInit, OnInit {
         .subscribe((response) => {
           this.submissionDetail = response;
 
-          this.statusText = `${this._getStatusText(response.status)} ${
-            response.status === 3 ? `(${response.observation})` : ''
-          }`;
+          this.statusText = `${this._utilsService.translateSubmissionStatus(
+            response.status
+          )} ${response.status === 3 ? `(${response.observation})` : ''}`;
 
           const sourceCode = this._utilsService.base64ToUtf8(
             response.source_code
@@ -106,26 +106,5 @@ export class SubmissionDetailComponent implements AfterViewInit, OnInit {
       state,
       parent: this.editor.nativeElement,
     });
-  }
-
-  private _getStatusText(status: number): string {
-    let resposta = '';
-
-    switch (status) {
-      case 0:
-        resposta = 'Created';
-        break;
-      case 1:
-        resposta = 'Processing';
-        break;
-      case 2:
-        resposta = 'Accepted';
-        break;
-      default:
-        resposta = 'Failed';
-        break;
-    }
-
-    return resposta;
   }
 }

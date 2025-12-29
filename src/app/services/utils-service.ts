@@ -19,6 +19,27 @@ export class UtilsService {
     return btoa(unescape(encodeURIComponent(text)));
   }
 
+  public translateSubmissionStatus(status: number): string {
+    let resposta = '';
+
+    switch (status) {
+      case 0:
+        resposta = 'Created';
+        break;
+      case 1:
+        resposta = 'Processing';
+        break;
+      case 2:
+        resposta = 'Accepted';
+        break;
+      default:
+        resposta = 'Failed';
+        break;
+    }
+
+    return resposta;
+  }
+
   public getColorContext(id: number): string {
     let color = '';
 

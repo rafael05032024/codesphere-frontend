@@ -6,6 +6,7 @@ import { SubmissionDetailComponent } from './pages/submission-detail/submission-
 import { CategoriesComponent } from './pages/categories/categories.component';
 import { authGuard } from './shared/guards/auth.guard';
 import { ProblemsComponent } from './pages/problems/problems.component';
+import { SubmissionsComponent } from './pages/submissions/submissions.component';
 
 export const routes: Routes = [
   {
@@ -25,6 +26,15 @@ export const routes: Routes = [
     component: ProblemsComponent,
     data: {
       subtitle: 'Selecione um dos seguintes problemas para resolver.',
+    },
+  },
+  {
+    path: 'submissions',
+    component: SubmissionsComponent,
+    data: {
+      title: 'Submissões',
+      subtitle: 'Aqui você pode encontrar todas as suas submissões.',
+      color: '#4cabb9',
     },
   },
   {

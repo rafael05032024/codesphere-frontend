@@ -14,6 +14,11 @@ interface IListProblemByCategoryResponse {
   total: number;
 }
 
+interface IListSubmissionResponse {
+  result: ISubmission[];
+  total: number;
+}
+
 @Injectable({ providedIn: 'root' })
 export class APIService extends SsrDataLoader {
   private readonly _baseUrl = 'https://codesphere-backend-npta.onrender.com';
@@ -69,6 +74,10 @@ export class APIService extends SsrDataLoader {
       'POST',
       payload
     );
+  }
+
+  public listSubmissions(): Observable<IListSubmissionResponse> {
+    return this._doCall<IListSubmissionResponse>(`${this._baseUrl}/submission`);
   }
 
   public getSubmissionDetail(submissionId: number): Observable<ISubmission> {
