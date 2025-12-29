@@ -4,11 +4,14 @@ import { APIService } from '../../services/api.service';
 import { IProblem } from '../../shared/models/interfaces/problem.interface';
 import { CommonModule } from '@angular/common';
 import { PageContextService } from '../../services/page-context.service';
+import { TableComponent } from '../../components/table/table.component';
+import { IColumn } from '../../shared/models/interfaces/column.interface';
+import { IRow } from '../../shared/models/interfaces/row.interface';
 
 @Component({
   selector: 'app-problems',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TableComponent],
   templateUrl: './problems.component.html',
   styleUrl: './problems.component.scss',
 })
@@ -20,6 +23,9 @@ export class ProblemsComponent implements OnInit {
   private _totalRecords!: number;
   private _pageCount!: number;
   private _page = 0;
+  public columns!: IColumn[];
+  public rows!: IRow[];
+  public showTable!: boolean;
 
   get chunks(): IProblem[][] {
     return this._chunks;
@@ -55,52 +61,54 @@ export class ProblemsComponent implements OnInit {
       color: '#1abc9c',
     });
 
+    this.showTable = false;
+
+    this.columns = [
+      {
+        class: '',
+        name: 'id',
+        title: '#',
+      },
+      {
+        class: 'left',
+        name: 'status',
+        title: '',
+      },
+      {
+        class: 'left',
+        name: 'title',
+        title: 'Nome',
+      },
+    ];
+
     this._route.params.subscribe((params) => {
       const categoryId = Number(params['category']);
 
       this._apiService
         .listProblemsByCategory(categoryId)
         .subscribe((response) => {
-          this._problems = response.result;
+          this.rows = response.result.map((problem) => ({
+            id: {
+              data: problem.id,
+              customClass: 'id',
+            },
+            status: {
+              customClass: 'tiny',
+              data: 'ok',
+            },
+            title: {
+              data: problem.title,
+            },
+          }));
 
-          let chunkSize = this._pageSize;
-          let aux = [] as IProblem[];
-
-          for (let i = 0; i < this._problems.length; i++) {
-            aux.push(this._problems[i]);
-
-            if (
-              aux.length === chunkSize ||
-              (i === this._problems.length - 1 && aux.length)
-            ) {
-              this._chunks.push(aux);
-              aux = [];
-            }
-          }
-
-          this._totalRecords = response.total;
-          this._pageCount = Math.round(this._totalRecords / this._pageSize);
+          this.showTable = true;
         });
     });
   }
 
-  public handleLastPage(): void {
-    this._page = this.chunks.length - 1;
-  }
+  public goToDetail(row: IRow): void {
+    const id = row['id'].data as number;
 
-  public handleFirstPage(): void {
-    this._page = 0;
-  }
-
-  public handleNextPage(): void {
-    this._page++;
-  }
-
-  public handlePreviousPage(): void {
-    this._page--;
-  }
-
-  public goToProblemDetail(problem: IProblem): void {
-    this, this._router.navigate([`problem/${problem.id}`]);
+    this._router.navigate([`problem/${id}`]);
   }
 }

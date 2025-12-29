@@ -1,17 +1,13 @@
-<!--<div class="table-container" *ngIf="!!problems && totalRecords">
+<div class="table-container">
   <table class="table">
     <thead>
-      <th class="left" class="id">#</th>
-      <th class="left"></th>
-      <th class="left">Nome</th>
+      <th *ngFor="let column of columns" [ngClass]="column.class">{{ column.title }}</th>
     </thead>
 
     <tbody>
-      <tr (click)="goToProblemDetail(problem)" [ngClass]=" (i % 2 === 0) ? 'par' : 'impar'  "
-        *ngFor="let problem of chunks[page]; let i = index">
-        <td class="id">{{ problem.id }}</td>
-        <td>ok</td>
-        <td>{{ problem.title }}</td>
+      <tr (click)="dispatchRowClickEvent(row)" [ngClass]=" (i % 2 === 0) ? 'par' : 'impar'  "
+        *ngFor="let row of chunks[page]; let i = index">
+        <td *ngFor="let column of columns" [ngClass]="row[column.name].customClass">{{ row[column.name].data }}</td>
       </tr>
     </tbody>
   </table>
@@ -39,7 +35,4 @@
       </button>
     </div>
   </div>
-</div>-->
-
-<app-table (rowClickEvent)="goToDetail($event)" [columns]="columns" [rows]="rows" [totalRecords]="rows.length"
-  *ngIf="showTable"></app-table>
+</div>
