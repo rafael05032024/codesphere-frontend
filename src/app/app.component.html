@@ -2,19 +2,32 @@
 
 <main *ngIf="!isLogin" class="container">
   <div class="header">
-    <div class="user-profile">
-      <img src="https://lh3.googleusercontent.com/a/ACg8ocLgwHOkFA_zsvfQv7BoeKx_kAbuvFwyKSIqQvgy4vWWES69tqPt=s96-c"
-        alt="" width="32">
+    <aside>
+      <div class="user-profile">
+        <img src="https://lh3.googleusercontent.com/a/ACg8ocLgwHOkFA_zsvfQv7BoeKx_kAbuvFwyKSIqQvgy4vWWES69tqPt=s96-c"
+          alt="" width="32">
 
-      <div class="user-info">
-        <span><b>Hi,</b> rluiz20</span>
-        <br>
-        <span class="user-email"><small>luizrafael&#64;gmail.com</small></span>
+        <div class="user-info">
+          <span><b>Hi,</b> rluiz20</span>
+          <br>
+          <span class="user-email"><small>luizrafael&#64;gmail.com</small></span>
+        </div>
       </div>
-    </div>
+
+      <div class="header-action-container">
+        <button (click)="goTo('categories')">
+          Categorias
+        </button>
+
+        <button (click)="goTo('submissions')">
+          Submissões
+        </button>
+      </div>
+
+    </aside>
 
     <div class="logout" (click)="logout()">
-      <img style="cursor: pointer;" src="assets/images/shutdown.png" width="25" alt="">
+      <img style="cursor: pointer;" src="assets/images/shutdown.png" width="30" alt="">
     </div>
   </div>
 

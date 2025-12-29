@@ -20,12 +20,18 @@ export const routes: Routes = [
   {
     path: 'problem/:id',
     component: ProblemDetailComponent,
+    data: {
+      hideProfile: true,
+      maxWidth: true,
+    },
   },
   {
     path: 'problems/:category',
     component: ProblemsComponent,
     data: {
       subtitle: 'Selecione um dos seguintes problemas para resolver.',
+      hideProfile: false,
+      maxWidth: false,
     },
   },
   {
@@ -35,6 +41,8 @@ export const routes: Routes = [
       title: 'Submissões',
       subtitle: 'Aqui você pode encontrar todas as suas submissões.',
       color: '#4cabb9',
+      hideProfile: false,
+      maxWidth: false,
     },
   },
   {
@@ -45,6 +53,8 @@ export const routes: Routes = [
       subtitle:
         'Visualize o código fonte de suas submissões, junto com alguns detalhes extras.',
       color: '#7a9eaa',
+      hideProfile: false,
+      maxWidth: false,
     },
   },
   {
@@ -56,6 +66,8 @@ export const routes: Routes = [
       subtitle:
         'Selecione uma das 8 grandes categorias de problemas para começar a resolver.',
       color: '#ef4500',
+      hideProfile: false,
+      maxWidth: false,
     },
   },
 ];

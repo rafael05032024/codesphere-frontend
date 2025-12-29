@@ -20,4 +20,8 @@ export class PageContextService {
   public setPageContext(context: IPageContext) {
     this._bsPageContext.next({ ...context });
   }
+
+  public clear() {
+    this._bsPageContext.next(null);
+  }
 }

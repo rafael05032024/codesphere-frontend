@@ -80,6 +80,8 @@ export class AppComponent implements OnInit {
 
         let route = this._route;
 
+        this._pageContextService.clear();
+
         while (route.firstChild) {
           route = route.firstChild;
         }
@@ -88,8 +90,10 @@ export class AppComponent implements OnInit {
           this._title = route.snapshot.data['title'] || ctx?.title;
           this._subTitle = route.snapshot.data['subtitle'] || ctx?.subtitle;
           this._color = route.snapshot.data['color'] || ctx?.color;
-          this._hideProfile = !!ctx?.hideProfile;
-          this._useFullWidth = !!ctx?.maxWidth;
+          this._hideProfile =
+            !!route.snapshot.data['hideProfile'] || !!ctx?.hideProfile;
+          this._useFullWidth =
+            !!route.snapshot.data['maxWidth'] || !!ctx?.maxWidth;
 
           this._cdr.detectChanges();
         });
@@ -98,5 +102,9 @@ export class AppComponent implements OnInit {
 
   public logout(): void {
     this._authContextService.logout();
+  }
+
+  public goTo(path: string): void {
+    this._router.navigate([path]);
   }
 }
