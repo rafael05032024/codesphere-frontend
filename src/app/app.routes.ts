@@ -28,8 +28,14 @@ export const routes: Routes = [
     },
   },
   {
-    path: 'submission',
+    path: 'submission/:id',
     component: SubmissionDetailComponent,
+    data: {
+      title: 'Código Fonte',
+      subtitle:
+        'Visualize o código fonte de suas submissões, junto com alguns detalhes extras.',
+      color: '#7a9eaa',
+    },
   },
   {
     path: 'categories',

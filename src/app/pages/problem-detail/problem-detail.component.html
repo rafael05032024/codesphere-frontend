@@ -40,9 +40,6 @@
       <span class="label">Linguagem</span>
       <select>
         <option value="c">C</option>
-        <option value="c">Java</option>
-        <option value="c">C++</option>
-        <option value="c">Javascript</option>
       </select>
 
     </div>
@@ -54,7 +51,7 @@
         Construa a sua solução e envie!
       </div>
 
-      <button>Enviar</button>
+      <button (click)="handleCodeSubmit()" [disabled]="disableButton">Enviar</button>
     </div>
 
   </aside>

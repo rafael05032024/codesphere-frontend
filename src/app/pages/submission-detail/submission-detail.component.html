@@ -1,41 +1,39 @@
 <main class="container">
   <div class="compilation-info-container">
-    <h3>SUBMISSÃO # 32115524</h3>
+    <h3>SUBMISSÃO # {{ submissionId }}</h3>
 
-    <div class="compilation-data-container">
+    <div class="compilation-data-container" *ngIf="!!submissionDetail">
       <div class="compilation-data">
         <span class="label">Problema:</span>
-        <span class="value">1000 - Hello World!</span>
+        <span class="value">{{ submissionDetail.problem.id }} - {{ submissionDetail.problem.title }}</span>
       </div>
 
       <div class="compilation-data">
         <span class="label">Resposta:</span>
-        <span class="value">Accepted</span>
+        <span class="value"
+          [ngStyle]="{ color: submissionDetail.status === 2 ? '#27ae60' : submissionDetail.status === 3 ? '#e74c3c' : '#2980b9', fontWeight: 'bold'  }">
+          {{ statusText }}</span>
       </div>
 
-      <div class="compilation-data">
-        <span class="label">Problema:</span>
-        <span class="value">1000 - Hello World!</span>
-      </div>
 
       <div class="compilation-data">
         <span class="label">Linguagem:</span>
-        <span class="value">C++</span>
+        <span class="value">{{ submissionDetail.language }}</span>
       </div>
 
       <div class="compilation-data">
         <span class="label">Tempo:</span>
-        <span class="value">0.21s</span>
+        <span class="value">{{ submissionDetail.compilation.time }}</span>
       </div>
 
       <div class="compilation-data">
         <span class="label">Tamanho:</span>
-        <span class="value">90 bytes</span>
+        <span class="value">{{ submissionDetail.compilation.size }} bytes</span>
       </div>
 
       <div class="compilation-data">
         <span class="label">Memória:</span>
-        <span class="value">-</span>
+        <span class="value">{{ submissionDetail.compilation.memory }} bytes</span>
       </div>
 
       <div class="compilation-data">

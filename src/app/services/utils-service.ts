@@ -15,6 +15,10 @@ export class UtilsService {
     return new TextDecoder('utf-8').decode(bytes);
   }
 
+  public convertTextToBase64(text: string): string {
+    return btoa(unescape(encodeURIComponent(text)));
+  }
+
   public getColorContext(id: number): string {
     let color = '';
 

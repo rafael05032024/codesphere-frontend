@@ -7,6 +7,7 @@ import { ICategory } from '../shared/models/interfaces/category.interface';
 import { AuthContextService } from './auth-context.service';
 import { IProblem } from '../shared/models/interfaces/problem.interface';
 import { UtilsService } from './utils-service';
+import { ISubmission } from '../shared/models/interfaces/submission.interface';
 
 interface IListProblemByCategoryResponse {
   result: IProblem[];
@@ -52,11 +53,48 @@ export class APIService extends SsrDataLoader {
     return this._doCall<IProblem>(`${this._baseUrl}/problem/${problemId}`);
   }
 
-  private _doCall<T>(url: string): Observable<T> {
-    return this.load<T>(
-      this._http.get<T>(url, {
-        headers: { Authorization: `Bearer ${this._token}` },
-      })
+  public createSubmission(
+    problemId: number,
+    languageId: number,
+    sourceCode: string
+  ): Observable<{ id: number }> {
+    const payload = {
+      problem_id: problemId,
+      language_id: languageId,
+      source_code: sourceCode,
+    };
+
+    return this._doCall<{ id: number }>(
+      `${this._baseUrl}/submission`,
+      'POST',
+      payload
     );
+  }
+
+  public getSubmissionDetail(submissionId: number): Observable<ISubmission> {
+    return this._doCall<ISubmission>(
+      `${this._baseUrl}/submission/${submissionId}`
+    );
+  }
+
+  private _doCall<T>(
+    url: string,
+    method = 'GET',
+    data?: unknown
+  ): Observable<T> {
+    let request$: Observable<T>;
+    const authorization = `Bearer ${this._token}`;
+
+    if (method === 'POST') {
+      request$ = this._http.post<T>(url, data, {
+        headers: { Authorization: authorization },
+      });
+    } else {
+      request$ = this._http.get<T>(url, {
+        headers: { Authorization: authorization },
+      });
+    }
+
+    return this.load<T>(request$);
   }
 }
