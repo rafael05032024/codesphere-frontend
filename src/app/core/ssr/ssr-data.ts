@@ -10,6 +10,8 @@ export class SsrDataLoader {
   ) {}
 
   protected load<T>(request$: Observable<T>): Observable<T> {
+    return request$;
+
     if (isPlatformBrowser(this.platformId)) {
       return request$;
     }

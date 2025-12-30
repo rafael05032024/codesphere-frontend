@@ -4,6 +4,9 @@ import express from 'express';
 import { fileURLToPath } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
 import bootstrap from './src/main.server';
+import cookieParser from 'cookie-parser';
+import axios from 'axios';
+import apiProxy from './src/app/server/api-proxy';
 
 // The Express app is exported so that it can be used by serverless Functions.
 export function app(): express.Express {
@@ -17,12 +20,40 @@ export function app(): express.Express {
   server.set('view engine', 'html');
   server.set('views', browserDistFolder);
 
+  server.use(cookieParser());
+  server.use(express.json());
+
   // Example Express Rest API endpoints
   // server.get('/api/**', (req, res) => { });
   // Serve static files from /browser
-  server.get('*.*', express.static(browserDistFolder, {
-    maxAge: '1y'
-  }));
+  server.get(
+    '*.*',
+    express.static(browserDistFolder, {
+      maxAge: '1y',
+    })
+  );
+
+  server.post('/session', (req, res) => {
+    const token = req.body['token'];
+
+    res.cookie('access_token', token, {
+      httpOnly: true,
+      sameSite: 'lax',
+      secure: false, // true em produção
+    });
+
+    res.status(204).json({});
+  });
+
+  server.get('/session', (req, res) => {
+    const token = req.cookies['access_token'];
+
+    console.log(token);
+
+    res.json({ token });
+  });
+
+  server.use('/api', apiProxy);
 
   // All regular routes use the Angular engine
   server.get('*', (req, res, next) => {

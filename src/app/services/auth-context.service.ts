@@ -42,7 +42,6 @@ export class AuthContextService {
 
   private _getCookie(name: string): string | null {
     if (typeof document === 'undefined') {
-      console.log('iiii');
       return null;
     }
 

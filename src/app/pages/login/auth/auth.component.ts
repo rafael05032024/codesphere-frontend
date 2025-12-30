@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthContextService } from '../../../services/auth-context.service';
+import { APIService } from '../../../services/api.service';
+import { noop } from 'rxjs';
 
 @Component({
   selector: 'app-auth',
@@ -13,6 +15,7 @@ export class AuthComponent implements OnInit {
   constructor(
     private readonly _activatedRoute: ActivatedRoute,
     private readonly _router: Router,
+    private readonly _apiService: APIService,
     private readonly _authContextService: AuthContextService
   ) {}
 
@@ -22,7 +25,9 @@ export class AuthComponent implements OnInit {
 
       this._authContextService.token = token;
 
-      this._router.navigate(['categories']);
+      this._apiService.setSession(token).subscribe(() => {
+        this._router.navigate(['categories']);
+      });
     });
   }
 }

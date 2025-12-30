@@ -6,6 +6,8 @@ import { APIService } from '../../services/api.service';
 import { ICategory } from '../../shared/models/interfaces/category.interface';
 import { Router } from '@angular/router';
 import { PageContextService } from '../../services/page-context.service';
+import { HttpClient } from '@angular/common/http';
+import { noop } from 'rxjs';
 
 @Component({
   selector: 'app-categories',
@@ -24,7 +26,8 @@ export class CategoriesComponent implements OnInit {
   constructor(
     private readonly _apiService: APIService,
     private readonly _pageContextService: PageContextService,
-    private readonly _router: Router
+    private readonly _router: Router,
+    private readonly _http: HttpClient
   ) {}
 
   ngOnInit(): void {

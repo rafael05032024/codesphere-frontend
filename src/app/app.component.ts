@@ -11,6 +11,7 @@ import { filter } from 'rxjs';
 import { AuthContextService } from './services/auth-context.service';
 import { PageContextService } from './services/page-context.service';
 import { UtilsService } from './services/utils-service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -29,6 +30,7 @@ export class AppComponent implements OnInit {
   private _useFullWidth!: boolean;
 
   constructor(
+    private readonly _http: HttpClient,
     private readonly _router: Router,
     private readonly _route: ActivatedRoute,
     private readonly _cdr: ChangeDetectorRef,
@@ -64,9 +66,9 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this._utilsService.isServer()) {
+    /*if (this._utilsService.isServer()) {
       return;
-    }
+    }*/
 
     this._router.events
       .pipe(

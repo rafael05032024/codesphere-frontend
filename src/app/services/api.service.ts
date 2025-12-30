@@ -22,17 +22,12 @@ interface IListSubmissionResponse {
 @Injectable({ providedIn: 'root' })
 export class APIService extends SsrDataLoader {
   private readonly _baseUrl = 'https://codesphere-backend-npta.onrender.com';
-  private _token!: string;
 
   constructor(
     private readonly _http: HttpClient,
-    private readonly _utilsService: UtilsService,
-    private readonly _authContextService: AuthContextService,
     @Inject(PLATFORM_ID) platformId: Object
   ) {
     super(_http, platformId);
-
-    this._token = this._authContextService.token;
   }
 
   public sigInWithGitHub(): void {
@@ -43,19 +38,23 @@ export class APIService extends SsrDataLoader {
   }
 
   public listCategories(): Observable<ICategory[]> {
-    return this._doCall<ICategory[]>(`${this._baseUrl}/category`);
+    return this._doCall<ICategory[]>(`/api/proxy`, 'POST', {
+      resource: 'category',
+    });
   }
 
   public listProblemsByCategory(
     categoryId: number
   ): Observable<IListProblemByCategoryResponse> {
-    return this._doCall<IListProblemByCategoryResponse>(
-      `${this._baseUrl}/problem?categoryId=${categoryId}`
-    );
+    return this._doCall<IListProblemByCategoryResponse>(`/api/proxy`, 'POST', {
+      resource: `problem?categoryId=${categoryId}`,
+    });
   }
 
   public getProblemDetail(problemId: number): Observable<IProblem> {
-    return this._doCall<IProblem>(`${this._baseUrl}/problem/${problemId}`);
+    return this._doCall<IProblem>(`/api/proxy`, 'POST', {
+      resource: `problem/${problemId}`,
+    });
   }
 
   public createSubmission(
@@ -69,21 +68,31 @@ export class APIService extends SsrDataLoader {
       source_code: sourceCode,
     };
 
-    return this._doCall<{ id: number }>(
-      `${this._baseUrl}/submission`,
-      'POST',
-      payload
-    );
+    return this._doCall<{ id: number }>(`/api/proxy`, 'POST', {
+      resource: 'submission',
+      method: 'POST',
+      data: payload,
+    });
   }
 
   public listSubmissions(): Observable<IListSubmissionResponse> {
-    return this._doCall<IListSubmissionResponse>(`${this._baseUrl}/submission`);
+    return this._doCall<IListSubmissionResponse>(`/api/proxy`, 'POST', {
+      resource: 'submission',
+      disableCache: true,
+    });
   }
 
   public getSubmissionDetail(submissionId: number): Observable<ISubmission> {
-    return this._doCall<ISubmission>(
-      `${this._baseUrl}/submission/${submissionId}`
-    );
+    return this._doCall<ISubmission>(`/api/proxy`, 'POST', {
+      resource: `submission/${submissionId}`,
+      disableCache: true,
+    });
+  }
+
+  public setSession(token: string): Observable<void> {
+    return this._doCall<void>(`/api/auth/token`, 'POST', {
+      token,
+    });
   }
 
   private _doCall<T>(
@@ -92,16 +101,11 @@ export class APIService extends SsrDataLoader {
     data?: unknown
   ): Observable<T> {
     let request$: Observable<T>;
-    const authorization = `Bearer ${this._token}`;
 
     if (method === 'POST') {
-      request$ = this._http.post<T>(url, data, {
-        headers: { Authorization: authorization },
-      });
+      request$ = this._http.post<T>(url, data);
     } else {
-      request$ = this._http.get<T>(url, {
-        headers: { Authorization: authorization },
-      });
+      request$ = this._http.get<T>(url);
     }
 
     return this.load<T>(request$);
