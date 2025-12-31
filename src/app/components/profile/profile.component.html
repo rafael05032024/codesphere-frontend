@@ -6,9 +6,21 @@
 
   </div>
 
-  <div class="user-info">
-    <span>Entrou: {{ registerAt }}</span>
-    <span>Resolvidos: {{ user.total_resolved }}</span>
-    <span>Submissões: {{ user.total_submissions }}</span>
+  <div class="user-info-container">
+    <div>
+      <img src="assets/images/door-open.svg" width="15" alt="" />
+      <span>Entrou: {{ registerAt }}</span>
+    </div>
+
+    <div>
+      <img src="assets/images/correct.svg" width="15" alt="" />
+      <span>Resolvidos: {{ user.total_resolved }}</span>
+    </div>
+
+    <div>
+      <img src="assets/images/gavel-solid-full.svg" width="15" alt="" />
+      <span>Submissões: {{ user.total_submissions
+        }}</span>
+    </div>
   </div>
 </main>

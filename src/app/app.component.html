@@ -1,35 +1,7 @@
 <router-outlet *ngIf="isLogin" />
 
 <main *ngIf="!isLogin" class="container">
-  <div class="header">
-    <aside>
-      <div class="user-profile">
-        <img src="https://lh3.googleusercontent.com/a/ACg8ocLgwHOkFA_zsvfQv7BoeKx_kAbuvFwyKSIqQvgy4vWWES69tqPt=s96-c"
-          alt="" width="32">
-
-        <div class="user-info">
-          <span><b>Hi,</b> rluiz20</span>
-          <br>
-          <span class="user-email"><small>luizrafael&#64;gmail.com</small></span>
-        </div>
-      </div>
-
-      <div class="header-action-container">
-        <button (click)="goTo('categories')">
-          Categorias
-        </button>
-
-        <button (click)="goTo('submissions')">
-          Submissões
-        </button>
-      </div>
-
-    </aside>
-
-    <div class="logout" (click)="logout()">
-      <img style="cursor: pointer;" src="assets/images/shutdown.png" width="30" alt="">
-    </div>
-  </div>
+  <app-header></app-header>
 
   <div class="content-container">
     <div class="content" [ngStyle]="{ maxWidth: useFullWidth ? '1200px' : '980px' }">

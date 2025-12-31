@@ -1,0 +1,28 @@
+<div class="header">
+  <aside>
+    <div class="user-profile">
+      <img [src]="avatar" alt="" width="36">
+
+      <div class="user-info">
+        <span><b>Hi,</b> {{ login }}</span>
+        <br>
+        <span class="user-email"><small>{{ email }}</small></span>
+      </div>
+    </div>
+
+    <div class="header-action-container">
+      <button (click)="goTo('categories')">
+        Categorias
+      </button>
+
+      <button (click)="goTo('submissions')">
+        Submissões
+      </button>
+    </div>
+
+  </aside>
+
+  <div class="logout-container" (click)="logout()">
+    <span class="logout-text">Sair</span>
+  </div>
+</div>

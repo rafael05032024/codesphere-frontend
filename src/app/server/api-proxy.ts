@@ -8,7 +8,7 @@ interface IAPIResponse {
 
 const router = Router();
 const baseUrl = 'https://codesphere-backend-npta.onrender.com';
-const cache = {} as any;
+let cache = {} as any;
 
 router.post('/auth/github/exchange', (req, res) => {
   const code = req.body['code'];
@@ -47,6 +47,8 @@ router.post('/auth/logout', (req, res) => {
     secure: false,
     path: '/',
   });
+
+  cache = {};
 
   return res.status(204).send();
 });

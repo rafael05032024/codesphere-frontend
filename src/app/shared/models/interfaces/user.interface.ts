@@ -4,4 +4,5 @@ export interface IUser {
   total_resolved: number;
   login: string;
   created_at: string;
+  email: string;
 }

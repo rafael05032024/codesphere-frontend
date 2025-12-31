@@ -15,11 +15,12 @@ import { ProxyService } from './services/proxy.service';
 import { IUser } from './shared/models/interfaces/user.interface';
 import { ProfileComponent } from './components/profile/profile.component';
 import { SessionService } from './services/session.service';
+import { HeaderComponent } from './components/header/header.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, CommonModule, ProfileComponent],
+  imports: [RouterOutlet, CommonModule, ProfileComponent, HeaderComponent],
   providers: [PostService],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',

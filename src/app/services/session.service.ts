@@ -13,7 +13,7 @@ export class SessionService {
 
   public end(): Observable<void> {
     return this._httpService
-      .doCall<void>('/auth/logout')
+      .doCall<void>('/api/auth/logout', 'POST')
       .pipe(tap(() => this._userService.clean()));
   }
 }
