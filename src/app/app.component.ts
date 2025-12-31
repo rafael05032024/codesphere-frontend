@@ -5,12 +5,10 @@ import {
   Router,
   RouterOutlet,
 } from '@angular/router';
-import { PostService } from './services/post.service';
+
 import { CommonModule } from '@angular/common';
 import { filter } from 'rxjs';
 import { PageContextService } from './services/page-context.service';
-import { UtilsService } from './services/utils-service';
-import { HttpClient } from '@angular/common/http';
 import { ProxyService } from './services/proxy.service';
 import { IUser } from './shared/models/interfaces/user.interface';
 import { ProfileComponent } from './components/profile/profile.component';
@@ -21,7 +19,7 @@ import { HeaderComponent } from './components/header/header.component';
   selector: 'app-root',
   standalone: true,
   imports: [RouterOutlet, CommonModule, ProfileComponent, HeaderComponent],
-  providers: [PostService],
+  providers: [],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
