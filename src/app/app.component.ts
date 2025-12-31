@@ -8,13 +8,11 @@ import {
 import { PostService } from './services/post.service';
 import { CommonModule } from '@angular/common';
 import { filter } from 'rxjs';
-import { AuthContextService } from './services/auth-context.service';
 import { PageContextService } from './services/page-context.service';
 import { UtilsService } from './services/utils-service';
 import { HttpClient } from '@angular/common/http';
-import { APIService } from './services/api.service';
+import { ProxyService } from './services/proxy.service';
 import { IUser } from './shared/models/interfaces/user.interface';
-import { ProblemDetailComponent } from './pages/problem-detail/problem-detail.component';
 import { ProfileComponent } from './components/profile/profile.component';
 
 @Component({
@@ -36,12 +34,10 @@ export class AppComponent implements OnInit {
   public userData!: IUser;
 
   constructor(
-    private readonly _http: HttpClient,
     private readonly _router: Router,
     private readonly _route: ActivatedRoute,
     private readonly _cdr: ChangeDetectorRef,
-    private readonly _utilsService: UtilsService,
-    private readonly _apiService: APIService,
+    private readonly _proxyService: ProxyService,
     private readonly _pageContextService: PageContextService
   ) {
     this._isLogin = true;
@@ -72,10 +68,6 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    /*if (this._utilsService.isServer()) {
-      return;
-    }*/
-
     this._router.events
       .pipe(
         filter(
@@ -109,7 +101,7 @@ export class AppComponent implements OnInit {
   }
 
   public logout(): void {
-    this._apiService.endSession().subscribe(() => {
+    this._proxyService.endSession().subscribe(() => {
       this._router.navigate(['login']);
     });
   }

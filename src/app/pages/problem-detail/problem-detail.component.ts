@@ -10,13 +10,13 @@ import {
 import { cpp } from '@codemirror/lang-cpp';
 import { syntaxHighlighting } from '@codemirror/language';
 import { CodeModel } from '@ngstack/code-editor';
+import { EditorView } from '@codemirror/view';
+
 import { PageContextService } from '../../services/page-context.service';
-import { APIService } from '../../services/api.service';
+import { ProxyService } from '../../services/proxy.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UtilsService } from '../../services/utils-service';
 import { IProblemTestCase } from '../../shared/models/interfaces/problem-test-case.interface';
-import { EditorView } from '@codemirror/view';
-import { noop } from 'rxjs';
 
 @Component({
   selector: 'app-problem',
@@ -58,7 +58,7 @@ export class ProblemDetailComponent implements OnInit {
     private readonly _router: Router,
     private readonly _pageContextService: PageContextService,
     private readonly _utilsService: UtilsService,
-    private readonly _apiService: APIService
+    private readonly _proxyService: ProxyService
   ) {}
 
   ngOnInit(): void {
@@ -72,7 +72,7 @@ export class ProblemDetailComponent implements OnInit {
     this._route.params.subscribe((params) => {
       this._problemId = Number(params['id']);
 
-      this._apiService
+      this._proxyService
         .getProblemDetail(this._problemId)
         .subscribe((response) => {
           this.descriptionText = response.description_text;
@@ -150,7 +150,7 @@ int main() {
 
     this.disableButton = true;
 
-    this._apiService
+    this._proxyService
       .createSubmission(problemId, languageId, sourceCode)
       .subscribe(({ id }) => {
         this._router.navigate([`submission/${id}`]);

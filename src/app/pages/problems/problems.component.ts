@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { APIService } from '../../services/api.service';
 import { CommonModule } from '@angular/common';
+
+import { ProxyService } from '../../services/proxy.service';
 import { PageContextService } from '../../services/page-context.service';
 import { TableComponent } from '../../components/table/table.component';
 import { IColumn } from '../../shared/models/interfaces/column.interface';
@@ -34,7 +35,7 @@ export class ProblemsComponent implements OnInit {
   constructor(
     private readonly _route: ActivatedRoute,
     private readonly _router: Router,
-    private readonly _apiService: APIService,
+    private readonly _proxyService: ProxyService,
     private readonly _utilsService: UtilsService,
     private readonly _pageContextService: PageContextService
   ) {}
@@ -69,7 +70,7 @@ export class ProblemsComponent implements OnInit {
         color: this._utilsService.getColorContext(categoryId),
       });
 
-      this._apiService
+      this._proxyService
         .listProblemsByCategory(categoryId)
         .subscribe((response) => {
           this.rows = response.result.map((problem) => ({

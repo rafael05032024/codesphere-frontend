@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { APIService } from '../../services/api.service';
+import { ProxyService } from '../../services/proxy.service';
 import { IUser } from '../../shared/models/interfaces/user.interface';
 import { UtilsService } from '../../services/utils-service';
 
@@ -15,12 +15,12 @@ export class ProfileComponent implements OnInit {
   public registerAt!: string;
 
   constructor(
-    private readonly _apiService: APIService,
+    private readonly _proxyService: ProxyService,
     private readonly _utilsService: UtilsService
   ) {}
 
   ngOnInit(): void {
-    this._apiService.getUserProfile().subscribe((user) => {
+    this._proxyService.getUserProfile().subscribe((user) => {
       this.user = user;
       this.registerAt = this._utilsService.formatDate('dd/MM/yyyy');
     });

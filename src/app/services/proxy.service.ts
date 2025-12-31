@@ -6,7 +6,6 @@ import { SsrDataLoader } from '../core/ssr/ssr-data';
 import { ICategory } from '../shared/models/interfaces/category.interface';
 import { IProblem } from '../shared/models/interfaces/problem.interface';
 import { ISubmission } from '../shared/models/interfaces/submission.interface';
-import { isPlatformBrowser } from '@angular/common';
 import { IUser } from '../shared/models/interfaces/user.interface';
 
 interface IListProblemByCategoryResponse {
@@ -20,7 +19,7 @@ interface IListSubmissionResponse {
 }
 
 @Injectable({ providedIn: 'root' })
-export class APIService extends SsrDataLoader {
+export class ProxyService extends SsrDataLoader {
   private readonly _clientId = 'Ov23liusXoeOwEKVd2cD';
 
   constructor(

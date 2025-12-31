@@ -1,13 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 import { CategoryCardComponent } from '../../components/category-card/category-card.component';
-import { APIService } from '../../services/api.service';
+import { ProxyService } from '../../services/proxy.service';
 import { ICategory } from '../../shared/models/interfaces/category.interface';
-import { Router } from '@angular/router';
-import { PageContextService } from '../../services/page-context.service';
-import { HttpClient } from '@angular/common/http';
-import { noop } from 'rxjs';
 
 @Component({
   selector: 'app-categories',
@@ -24,14 +21,12 @@ export class CategoriesComponent implements OnInit {
   }
 
   constructor(
-    private readonly _apiService: APIService,
-    private readonly _pageContextService: PageContextService,
-    private readonly _router: Router,
-    private readonly _http: HttpClient
+    private readonly _proxyService: ProxyService,
+    private readonly _router: Router
   ) {}
 
   ngOnInit(): void {
-    this._apiService
+    this._proxyService
       .listCategories()
       .subscribe((_categories) => (this._categories = _categories));
   }

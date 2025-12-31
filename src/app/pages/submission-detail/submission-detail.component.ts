@@ -11,11 +11,12 @@ import {
 import { ActivatedRoute } from '@angular/router';
 import { cpp } from '@codemirror/lang-cpp';
 import { syntaxHighlighting } from '@codemirror/language';
+import { EditorView } from '@codemirror/view';
+
 import { PageContextService } from '../../services/page-context.service';
-import { APIService } from '../../services/api.service';
+import { ProxyService } from '../../services/proxy.service';
 import { ISubmission } from '../../shared/models/interfaces/submission.interface';
 import { UtilsService } from '../../services/utils-service';
-import { EditorView } from '@codemirror/view';
 
 @Component({
   selector: 'app-submission-detail',
@@ -39,7 +40,7 @@ export class SubmissionDetailComponent implements AfterViewInit, OnInit {
   constructor(
     private readonly _route: ActivatedRoute,
     private readonly _pageContextService: PageContextService,
-    private readonly _apiService: APIService,
+    private readonly _proxyService: ProxyService,
     private readonly _utilsService: UtilsService
   ) {}
 
@@ -52,7 +53,7 @@ export class SubmissionDetailComponent implements AfterViewInit, OnInit {
     this._route.params.subscribe((params) => {
       this.submissionId = Number(params['id']);
 
-      this._apiService
+      this._proxyService
         .getSubmissionDetail(this.submissionId)
         .subscribe((response) => {
           this.submissionDetail = response;
