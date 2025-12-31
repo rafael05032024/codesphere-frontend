@@ -4,10 +4,10 @@ import { Observable } from 'rxjs';
 
 import { SsrDataLoader } from '../core/ssr/ssr-data';
 import { ICategory } from '../shared/models/interfaces/category.interface';
-import { AuthContextService } from './auth-context.service';
 import { IProblem } from '../shared/models/interfaces/problem.interface';
-import { UtilsService } from './utils-service';
 import { ISubmission } from '../shared/models/interfaces/submission.interface';
+import { isPlatformBrowser } from '@angular/common';
+import { IUser } from '../shared/models/interfaces/user.interface';
 
 interface IListProblemByCategoryResponse {
   result: IProblem[];
@@ -21,7 +21,7 @@ interface IListSubmissionResponse {
 
 @Injectable({ providedIn: 'root' })
 export class APIService extends SsrDataLoader {
-  private readonly _baseUrl = 'https://codesphere-backend-npta.onrender.com';
+  private readonly _clientId = 'Ov23liusXoeOwEKVd2cD';
 
   constructor(
     private readonly _http: HttpClient,
@@ -31,10 +31,15 @@ export class APIService extends SsrDataLoader {
   }
 
   public sigInWithGitHub(): void {
-    const { protocol, hostname, port } = window.location;
-    const origin = `${protocol}/${hostname}:${port}/auth`;
+    const redirectUri = `${window.location.protocol}//${window.location.host}/auth`;
 
-    window.location.href = `${this._baseUrl}/auth/github/login?redirect=${origin}`;
+    window.location.href =
+      'https://github.com/login/oauth/authorize' +
+      '?client_id=' +
+      this._clientId +
+      '&redirect_uri=' +
+      redirectUri +
+      '&scope=user:email';
   }
 
   public listCategories(): Observable<ICategory[]> {
@@ -89,10 +94,20 @@ export class APIService extends SsrDataLoader {
     });
   }
 
-  public setSession(token: string): Observable<void> {
-    return this._doCall<void>(`/api/auth/token`, 'POST', {
-      token,
+  public getUserProfile(): Observable<IUser> {
+    return this._doCall<IUser>(`/api/proxy`, 'POST', {
+      resource: `user/me`,
     });
+  }
+
+  public setSession(code: string): Observable<void> {
+    return this._doCall<void>(`/api/auth/token`, 'POST', {
+      code,
+    });
+  }
+
+  public endSession(): Observable<void> {
+    return this._doCall<void>(`/api/auth/logout`, 'POST', {});
   }
 
   private _doCall<T>(

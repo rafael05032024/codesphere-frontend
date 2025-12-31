@@ -21,11 +21,11 @@ export class AuthComponent implements OnInit {
 
   ngOnInit(): void {
     this._activatedRoute.queryParams.subscribe((params) => {
-      const token = params['token'];
+      const code = params['code'];
 
-      this._authContextService.token = token;
+      this._authContextService.token = code;
 
-      this._apiService.setSession(token).subscribe(() => {
+      this._apiService.setSession(code).subscribe(() => {
         this._router.navigate(['categories']);
       });
     });

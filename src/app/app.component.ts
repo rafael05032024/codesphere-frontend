@@ -12,11 +12,15 @@ import { AuthContextService } from './services/auth-context.service';
 import { PageContextService } from './services/page-context.service';
 import { UtilsService } from './services/utils-service';
 import { HttpClient } from '@angular/common/http';
+import { APIService } from './services/api.service';
+import { IUser } from './shared/models/interfaces/user.interface';
+import { ProblemDetailComponent } from './pages/problem-detail/problem-detail.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, CommonModule],
+  imports: [RouterOutlet, CommonModule, ProfileComponent],
   providers: [PostService],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
@@ -29,13 +33,15 @@ export class AppComponent implements OnInit {
   private _isLogin!: boolean;
   private _useFullWidth!: boolean;
 
+  public userData!: IUser;
+
   constructor(
     private readonly _http: HttpClient,
     private readonly _router: Router,
     private readonly _route: ActivatedRoute,
     private readonly _cdr: ChangeDetectorRef,
     private readonly _utilsService: UtilsService,
-    private readonly _authContextService: AuthContextService,
+    private readonly _apiService: APIService,
     private readonly _pageContextService: PageContextService
   ) {
     this._isLogin = true;
@@ -103,7 +109,9 @@ export class AppComponent implements OnInit {
   }
 
   public logout(): void {
-    this._authContextService.logout();
+    this._apiService.endSession().subscribe(() => {
+      this._router.navigate(['login']);
+    });
   }
 
   public goTo(path: string): void {

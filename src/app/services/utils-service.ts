@@ -40,6 +40,29 @@ export class UtilsService {
     return resposta;
   }
 
+  public formatDate(format: string): string {
+    const isoDate = '2025-12-26T00:51:09.156802';
+
+    const date = new Date(isoDate);
+
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const seconds = date.getSeconds();
+
+    const formatted = format
+      .replace('dd', day)
+      .replace('MM', month)
+      .replace('yyyy', String(year))
+      .replace('HH', String(hours))
+      .replace('mm', String(minutes))
+      .replace('ss', String(seconds));
+
+    return formatted;
+  }
+
   public getColorContext(id: number): string {
     let color = '';
 

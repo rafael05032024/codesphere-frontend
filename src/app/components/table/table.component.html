@@ -7,7 +7,9 @@
     <tbody>
       <tr (click)="dispatchRowClickEvent(row)" [ngClass]=" (i % 2 === 0) ? 'par' : 'impar'  "
         *ngFor="let row of chunks[page]; let i = index">
-        <td *ngFor="let column of columns" [ngClass]="row[column.name].customClass">{{ row[column.name].data }}</td>
+        <td *ngFor="let column of columns" [ngClass]="row[column.name].customClass">{{ row[column.name].data }} <img
+            *ngIf="!!row[column.name].icon" [src]="row[column.name].icon?.url ?? ''"
+            [width]="row[column.name].icon?.width ?? '10'" /></td>
       </tr>
     </tbody>
   </table>

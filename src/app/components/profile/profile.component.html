@@ -1,0 +1,14 @@
+<main class="profile-container">
+  <div class="profile-login-picture">
+    <img [src]="user.avatar_url" alt="" width="150">
+
+    <span class="user-login">{{ user.login }}</span>
+
+  </div>
+
+  <div class="user-info">
+    <span>Entrou: {{ registerAt }}</span>
+    <span>Resolvidos: {{ user.total_resolved }}</span>
+    <span>Submissões: {{ user.total_submissions }}</span>
+  </div>
+</main>

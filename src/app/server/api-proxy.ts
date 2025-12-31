@@ -11,22 +11,51 @@ const baseUrl = 'https://codesphere-backend-npta.onrender.com';
 const cache = {} as any;
 
 router.post('/auth/token', (req, res) => {
-  const token = req.body['token'];
+  const code = req.body['code'];
 
-  res.cookie('access_token', token, {
+  console.log({ code });
+
+  return axios
+    .post(`${baseUrl}/auth/github/exchange`, {
+      code,
+    })
+    .then((apiReturn) => {
+      const token = apiReturn.data['token'];
+      res.cookie('access_token', token, {
+        httpOnly: true,
+        sameSite: 'lax',
+        secure: false,
+      });
+
+      prefetch(token);
+
+      return res.status(204).json({});
+    })
+    .catch((error) => {
+      console.error(error.response);
+
+      return res
+        .status(500)
+        .json({ message: 'Falha ao trocar token com backend' });
+    });
+});
+
+router.post('/auth/logout', (req, res) => {
+  res.clearCookie('access_token', {
     httpOnly: true,
     sameSite: 'lax',
     secure: false,
+    path: '/',
   });
 
-  prefetch(token);
-
-  res.status(204).json({});
+  return res.status(204).send();
 });
 
 router.post('/proxy', (req, res) => {
   const { resource, data, method, disableCache } = req.body;
   const token = req.cookies['access_token'];
+
+  console.log({ token });
 
   console.log({ body: req.body, cache: cache[resource] });
 
@@ -111,9 +140,8 @@ async function doCall(
   return request
     .then(({ status, data }) => ({ status, data }))
     .catch((error) => {
-      console.error('APICallErrpr', error);
-
       if (error.response) {
+        console.error('APICallErrpr', error.response);
         const { status, data } = error.response;
 
         return {

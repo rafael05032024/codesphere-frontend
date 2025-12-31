@@ -8,6 +8,8 @@ export interface IProblem {
   output_text: string;
   time_limit: number;
   author_name: string;
+  solved: boolean;
+  attempted: boolean;
   example_test_cases: IProblemTestCase[];
   category: {
     name: string;

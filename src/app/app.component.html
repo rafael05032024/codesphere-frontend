@@ -33,24 +33,7 @@
 
   <div class="content-container">
     <div class="content" [ngStyle]="{ maxWidth: useFullWidth ? '1200px' : '980px' }">
-      <aside class="content-aside" *ngIf="!hideProfile">
-
-        <div class="user-profile">
-          <img src="https://lh3.googleusercontent.com/a/ACg8ocLgwHOkFA_zsvfQv7BoeKx_kAbuvFwyKSIqQvgy4vWWES69tqPt=s96-c"
-            alt="" width="150">
-
-          <span class="user-name">rluiz20</span>
-
-        </div>
-
-
-        <div class="user-info">
-          <span>Entrou: 18/09/2025</span>
-          <span>Resolvidos: 14</span>
-          <span>Submissões: 19</span>
-        </div>
-
-      </aside>
+      <app-profile *ngIf="!hideProfile"></app-profile>
 
       <div class="content-main">
         <div class="page-title">

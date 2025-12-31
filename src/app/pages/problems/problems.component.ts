@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { APIService } from '../../services/api.service';
-import { IProblem } from '../../shared/models/interfaces/problem.interface';
 import { CommonModule } from '@angular/common';
 import { PageContextService } from '../../services/page-context.service';
 import { TableComponent } from '../../components/table/table.component';
 import { IColumn } from '../../shared/models/interfaces/column.interface';
 import { IRow } from '../../shared/models/interfaces/row.interface';
+import { UtilsService } from '../../services/utils-service';
 
 @Component({
   selector: 'app-problems',
@@ -16,51 +16,30 @@ import { IRow } from '../../shared/models/interfaces/row.interface';
   styleUrl: './problems.component.scss',
 })
 export class ProblemsComponent implements OnInit {
-  private readonly _pageSize = 25;
+  private readonly _map = {
+    1: 'Iniciante',
+    2: 'Ad-Hoc',
+    3: 'strings',
+    4: 'Estruturas e Bibliotecas',
+    5: 'Matemática',
+    6: 'Paradigmas',
+    7: 'Grafos',
+    8: 'Geometria Computacional',
+  } as { [key: number]: string };
 
-  private _problems!: IProblem[];
-  private _chunks: IProblem[][] = [];
-  private _totalRecords!: number;
-  private _pageCount!: number;
-  private _page = 0;
   public columns!: IColumn[];
   public rows!: IRow[];
   public showTable!: boolean;
-
-  get chunks(): IProblem[][] {
-    return this._chunks;
-  }
-
-  get problems(): IProblem[] {
-    return this._problems;
-  }
-
-  get totalRecords(): number {
-    return this._totalRecords;
-  }
-
-  get page(): number {
-    return this._page;
-  }
-
-  get pageCount(): number {
-    return this._pageCount;
-  }
 
   constructor(
     private readonly _route: ActivatedRoute,
     private readonly _router: Router,
     private readonly _apiService: APIService,
+    private readonly _utilsService: UtilsService,
     private readonly _pageContextService: PageContextService
   ) {}
 
   ngOnInit(): void {
-    this._pageContextService.setPageContext({
-      title: 'Iniciante',
-      subtitle: 'Selecione um dos seguintes problemas para resolver.',
-      color: '#1abc9c',
-    });
-
     this.showTable = false;
 
     this.columns = [
@@ -84,6 +63,12 @@ export class ProblemsComponent implements OnInit {
     this._route.params.subscribe((params) => {
       const categoryId = Number(params['category']);
 
+      this._pageContextService.setPageContext({
+        title: this._map[categoryId],
+        subtitle: 'Selecione um dos seguintes problemas para resolver.',
+        color: this._utilsService.getColorContext(categoryId),
+      });
+
       this._apiService
         .listProblemsByCategory(categoryId)
         .subscribe((response) => {
@@ -94,7 +79,16 @@ export class ProblemsComponent implements OnInit {
             },
             status: {
               customClass: 'tiny',
-              data: 'ok',
+              data: '',
+              icon:
+                problem.attempted || problem.solved
+                  ? {
+                      url: problem.solved
+                        ? 'assets/images/check-mark.png'
+                        : 'assets/images/cross.png',
+                      width: 15,
+                    }
+                  : undefined,
             },
             title: {
               data: problem.title,
