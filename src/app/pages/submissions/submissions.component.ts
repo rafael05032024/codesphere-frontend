@@ -3,9 +3,9 @@ import { Component, OnInit } from '@angular/core';
 
 import { IRow } from '../../shared/models/interfaces/row.interface';
 import { IColumn } from '../../shared/models/interfaces/column.interface';
-import { ProxyService } from '../../services/proxy.service';
 import { TableComponent } from '../../components/table/table.component';
 import { UtilsService } from '../../services/utils-service';
+import { SubmissionService } from '../../services/submission.service';
 
 @Component({
   selector: 'app-submissions',
@@ -22,7 +22,7 @@ export class SubmissionsComponent implements OnInit {
   constructor(
     private readonly _router: Router,
     private readonly _utilsSerive: UtilsService,
-    private readonly _proxyService: ProxyService
+    private readonly _submissionService: SubmissionService
   ) {}
 
   ngOnInit(): void {
@@ -54,7 +54,7 @@ export class SubmissionsComponent implements OnInit {
       },
     ];
 
-    this._proxyService.listSubmissions().subscribe((response) => {
+    this._submissionService.list().subscribe((response) => {
       this.rows = response.result.map((submission) => ({
         id: {
           data: submission.id,

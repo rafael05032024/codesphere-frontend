@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { ProxyService } from '../../services/proxy.service';
+import { GitHubOAuthService } from '../../services/github-oauth.service';
 
 @Component({
   selector: 'app-login',
@@ -10,9 +10,9 @@ import { ProxyService } from '../../services/proxy.service';
   styleUrl: './login.component.scss',
 })
 export class LoginComponent {
-  constructor(private readonly _proxyService: ProxyService) {}
+  constructor(private readonly _gitHubOAuthService: GitHubOAuthService) {}
 
   public sigInWithGitHub(): void {
-    this._proxyService.sigInWithGitHub();
+    this._gitHubOAuthService.authorize();
   }
 }

@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
-import { ProxyService } from '../../services/proxy.service';
 import { PageContextService } from '../../services/page-context.service';
 import { TableComponent } from '../../components/table/table.component';
 import { IColumn } from '../../shared/models/interfaces/column.interface';
 import { IRow } from '../../shared/models/interfaces/row.interface';
 import { UtilsService } from '../../services/utils-service';
+import { ProblemService } from '../../services/problem.service';
 
 @Component({
   selector: 'app-problems',
@@ -35,7 +35,7 @@ export class ProblemsComponent implements OnInit {
   constructor(
     private readonly _route: ActivatedRoute,
     private readonly _router: Router,
-    private readonly _proxyService: ProxyService,
+    private readonly _problemService: ProblemService,
     private readonly _utilsService: UtilsService,
     private readonly _pageContextService: PageContextService
   ) {}
@@ -70,34 +70,32 @@ export class ProblemsComponent implements OnInit {
         color: this._utilsService.getColorContext(categoryId),
       });
 
-      this._proxyService
-        .listProblemsByCategory(categoryId)
-        .subscribe((response) => {
-          this.rows = response.result.map((problem) => ({
-            id: {
-              data: problem.id,
-              customClass: 'id',
-            },
-            status: {
-              customClass: 'tiny',
-              data: '',
-              icon:
-                problem.attempted || problem.solved
-                  ? {
-                      url: problem.solved
-                        ? 'assets/images/check-mark.png'
-                        : 'assets/images/cross.png',
-                      width: 15,
-                    }
-                  : undefined,
-            },
-            title: {
-              data: problem.title,
-            },
-          }));
+      this._problemService.listByCategory(categoryId).subscribe((response) => {
+        this.rows = response.result.map((problem) => ({
+          id: {
+            data: problem.id,
+            customClass: 'id',
+          },
+          status: {
+            customClass: 'tiny',
+            data: '',
+            icon:
+              problem.attempted || problem.solved
+                ? {
+                    url: problem.solved
+                      ? 'assets/images/check-mark.png'
+                      : 'assets/images/cross.png',
+                    width: 15,
+                  }
+                : undefined,
+          },
+          title: {
+            data: problem.title,
+          },
+        }));
 
-          this.showTable = true;
-        });
+        this.showTable = true;
+      });
     });
   }
 

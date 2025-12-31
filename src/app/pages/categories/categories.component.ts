@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 
 import { CategoryCardComponent } from '../../components/category-card/category-card.component';
-import { ProxyService } from '../../services/proxy.service';
 import { ICategory } from '../../shared/models/interfaces/category.interface';
+import { CategoryService } from '../../services/category.service';
 
 @Component({
   selector: 'app-categories',
@@ -21,13 +21,13 @@ export class CategoriesComponent implements OnInit {
   }
 
   constructor(
-    private readonly _proxyService: ProxyService,
+    private readonly _categoryService: CategoryService,
     private readonly _router: Router
   ) {}
 
   ngOnInit(): void {
-    this._proxyService
-      .listCategories()
+    this._categoryService
+      .list()
       .subscribe((_categories) => (this._categories = _categories));
   }
 

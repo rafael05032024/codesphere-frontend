@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './pages/login/login.component';
-import { AuthComponent } from './pages/login/auth/auth.component';
+import { GitHubComponent } from './pages/auth/github/github.component';
 import { ProblemDetailComponent } from './pages/problem-detail/problem-detail.component';
 import { SubmissionDetailComponent } from './pages/submission-detail/submission-detail.component';
 import { CategoriesComponent } from './pages/categories/categories.component';
@@ -14,8 +14,8 @@ export const routes: Routes = [
     component: LoginComponent,
   },
   {
-    path: 'auth',
-    component: AuthComponent,
+    path: 'auth/github',
+    component: GitHubComponent,
   },
   {
     path: 'problem/:id',

@@ -10,7 +10,7 @@ const router = Router();
 const baseUrl = 'https://codesphere-backend-npta.onrender.com';
 const cache = {} as any;
 
-router.post('/auth/token', (req, res) => {
+router.post('/auth/github/exchange', (req, res) => {
   const code = req.body['code'];
 
   console.log({ code });

@@ -14,6 +14,7 @@ import { HttpClient } from '@angular/common/http';
 import { ProxyService } from './services/proxy.service';
 import { IUser } from './shared/models/interfaces/user.interface';
 import { ProfileComponent } from './components/profile/profile.component';
+import { SessionService } from './services/session.service';
 
 @Component({
   selector: 'app-root',
@@ -24,12 +25,12 @@ import { ProfileComponent } from './components/profile/profile.component';
   styleUrl: './app.component.scss',
 })
 export class AppComponent implements OnInit {
-  private _title!: string;
-  private _subTitle!: string;
-  private _color!: string;
-  private _hideProfile!: boolean;
-  private _isLogin!: boolean;
-  private _useFullWidth!: boolean;
+  public title!: string;
+  public subTitle!: string;
+  public color!: string;
+  public hideProfile!: boolean;
+  public isLogin!: boolean;
+  public useFullWidth!: boolean;
 
   public userData!: IUser;
 
@@ -38,33 +39,10 @@ export class AppComponent implements OnInit {
     private readonly _route: ActivatedRoute,
     private readonly _cdr: ChangeDetectorRef,
     private readonly _proxyService: ProxyService,
+    private readonly _sessionService: SessionService,
     private readonly _pageContextService: PageContextService
   ) {
-    this._isLogin = true;
-  }
-
-  get isLogin(): boolean {
-    return this._isLogin;
-  }
-
-  get title(): string {
-    return this._title;
-  }
-
-  get subtitle(): string {
-    return this._subTitle;
-  }
-
-  get color(): string {
-    return this._color;
-  }
-
-  get hideProfile(): boolean {
-    return this._hideProfile;
-  }
-
-  get useFullWidth(): boolean {
-    return this._useFullWidth;
+    this.isLogin = true;
   }
 
   ngOnInit(): void {
@@ -76,7 +54,7 @@ export class AppComponent implements OnInit {
       )
       .subscribe((event) => {
         const url = event.urlAfterRedirects;
-        this._isLogin = url.includes('/login') || url.includes('/auth');
+        this.isLogin = url.includes('/login') || url.includes('/auth');
 
         let route = this._route;
 
@@ -87,12 +65,12 @@ export class AppComponent implements OnInit {
         }
 
         this._pageContextService.obsPageContext.subscribe((ctx) => {
-          this._title = route.snapshot.data['title'] || ctx?.title;
-          this._subTitle = route.snapshot.data['subtitle'] || ctx?.subtitle;
-          this._color = route.snapshot.data['color'] || ctx?.color;
-          this._hideProfile =
+          this.title = route.snapshot.data['title'] || ctx?.title;
+          this.subTitle = route.snapshot.data['subtitle'] || ctx?.subtitle;
+          this.color = route.snapshot.data['color'] || ctx?.color;
+          this.hideProfile =
             !!route.snapshot.data['hideProfile'] || !!ctx?.hideProfile;
-          this._useFullWidth =
+          this.useFullWidth =
             !!route.snapshot.data['maxWidth'] || !!ctx?.maxWidth;
 
           this._cdr.detectChanges();
@@ -101,7 +79,7 @@ export class AppComponent implements OnInit {
   }
 
   public logout(): void {
-    this._proxyService.endSession().subscribe(() => {
+    this._sessionService.end().subscribe(() => {
       this._router.navigate(['login']);
     });
   }

@@ -13,10 +13,11 @@ import { CodeModel } from '@ngstack/code-editor';
 import { EditorView } from '@codemirror/view';
 
 import { PageContextService } from '../../services/page-context.service';
-import { ProxyService } from '../../services/proxy.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UtilsService } from '../../services/utils-service';
 import { IProblemTestCase } from '../../shared/models/interfaces/problem-test-case.interface';
+import { ProblemService } from '../../services/problem.service';
+import { SubmissionService } from '../../services/submission.service';
 
 @Component({
   selector: 'app-problem',
@@ -41,14 +42,15 @@ export class ProblemDetailComponent implements OnInit {
     },
   };
 
+  private _problemId!: number;
+  private _view!: EditorView;
+
   public disableButton = false;
   public inputText!: string;
   public outputText!: string;
   public descriptionText!: string;
   public examples!: IProblemTestCase[];
   public isBrowser!: boolean;
-  private _problemId!: number;
-  private _view!: EditorView;
 
   @ViewChild('editor', { static: false }) editor!: ElementRef;
   private platformId = inject(PLATFORM_ID);
@@ -58,12 +60,11 @@ export class ProblemDetailComponent implements OnInit {
     private readonly _router: Router,
     private readonly _pageContextService: PageContextService,
     private readonly _utilsService: UtilsService,
-    private readonly _proxyService: ProxyService
+    private readonly _problemService: ProblemService,
+    private readonly _submissionService: SubmissionService
   ) {}
 
   ngOnInit(): void {
-    //this.isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
-
     this._pageContextService.setPageContext({
       hideProfile: true,
       maxWidth: true,
@@ -72,30 +73,28 @@ export class ProblemDetailComponent implements OnInit {
     this._route.params.subscribe((params) => {
       this._problemId = Number(params['id']);
 
-      this._proxyService
-        .getProblemDetail(this._problemId)
-        .subscribe((response) => {
-          this.descriptionText = response.description_text;
-          this.inputText = response.input_text;
-          this.outputText = response.output_text;
-          this.examples = response.example_test_cases.map((etc) => ({
-            ...etc,
-            input: this._utilsService
-              .base64ToUtf8(etc.input)
-              .replaceAll('\n', '<br />'),
-            expected_output: this._utilsService
-              .base64ToUtf8(etc.expected_output)
-              .replaceAll('\n', '<br />'),
-          }));
+      this._problemService.getById(this._problemId).subscribe((response) => {
+        this.descriptionText = response.description_text;
+        this.inputText = response.input_text;
+        this.outputText = response.output_text;
+        this.examples = response.example_test_cases.map((etc) => ({
+          ...etc,
+          input: this._utilsService
+            .base64ToUtf8(etc.input)
+            .replaceAll('\n', '<br />'),
+          expected_output: this._utilsService
+            .base64ToUtf8(etc.expected_output)
+            .replaceAll('\n', '<br />'),
+        }));
 
-          this._pageContextService.setPageContext({
-            title: `${response.id} | ${response.title}`,
-            subtitle: `Tempo limite: ${response.time_limit} segundos | Memória: 200mb`,
-            color: this._utilsService.getColorContext(response.category.id),
-            hideProfile: true,
-            maxWidth: true,
-          });
+        this._pageContextService.setPageContext({
+          title: `${response.id} | ${response.title}`,
+          subtitle: `Tempo limite: ${response.time_limit} segundos | Memória: 200mb`,
+          color: this._utilsService.getColorContext(response.category.id),
+          hideProfile: true,
+          maxWidth: true,
         });
+      });
     });
   }
 
@@ -150,8 +149,8 @@ int main() {
 
     this.disableButton = true;
 
-    this._proxyService
-      .createSubmission(problemId, languageId, sourceCode)
+    this._submissionService
+      .create(problemId, languageId, sourceCode)
       .subscribe(({ id }) => {
         this._router.navigate([`submission/${id}`]);
       });

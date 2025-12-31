@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProxyService } from '../../services/proxy.service';
 import { IUser } from '../../shared/models/interfaces/user.interface';
 import { UtilsService } from '../../services/utils-service';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-profile',
@@ -15,14 +16,12 @@ export class ProfileComponent implements OnInit {
   public registerAt!: string;
 
   constructor(
-    private readonly _proxyService: ProxyService,
+    private readonly _userService: UserService,
     private readonly _utilsService: UtilsService
   ) {}
 
   ngOnInit(): void {
-    this._proxyService.getUserProfile().subscribe((user) => {
-      this.user = user;
-      this.registerAt = this._utilsService.formatDate('dd/MM/yyyy');
-    });
+    this.user = this._userService.get();
+    this.registerAt = this._utilsService.formatDate('dd/MM/yyyy');
   }
 }
