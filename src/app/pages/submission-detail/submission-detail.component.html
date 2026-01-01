@@ -12,11 +12,15 @@
         <span class="label">Resposta:</span>
         <span class="value"
           [ngStyle]="{ color: submissionDetail.status === 2 ? '#27ae60' : submissionDetail.status === 3 ? '#e74c3c' : '#2980b9', fontWeight: 'bold'  }">
-          {{ statusText }}</span>
+          {{ statusText }}
+          <div class="loading" *ngIf="isProcessing">
+            <app-loading />
+          </div>
+        </span>
       </div>
 
 
-      <div class="compilation-data">
+      <div class=" compilation-data">
         <span class="label">Linguagem:</span>
         <span class="value">{{ submissionDetail.language }}</span>
       </div>

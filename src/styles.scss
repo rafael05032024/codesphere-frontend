@@ -1,3 +1,17 @@
+@import 'ngx-toastr/toastr';
+
+.toast-success {
+  font-size: 0.5rem !important;
+}
+
+.toast-success::before {
+  font-size: 0.5rem !important;
+}
+
+.toast-container .ngx-toastr {
+  width: 450px;      /* 👈 largura fixa */
+}
+
 @font-face {
     font-family: 'SketchRockwell';
     src: url('https://resources.beecrowd.com/judge/fonts/sketchrockwell-uri.eot');

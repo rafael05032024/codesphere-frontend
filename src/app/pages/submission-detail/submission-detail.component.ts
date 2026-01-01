@@ -17,11 +17,14 @@ import { PageContextService } from '../../services/page-context.service';
 import { ISubmission } from '../../shared/models/interfaces/submission.interface';
 import { UtilsService } from '../../services/utils-service';
 import { SubmissionService } from '../../services/submission.service';
+import { SSEService } from '../../services/sse.service';
+import { ToastService } from '../../services/toast.service';
+import { LoadingComponent } from '../../components/loading/loading.component';
 
 @Component({
   selector: 'app-submission-detail',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, LoadingComponent],
   templateUrl: './submission-detail.component.html',
   styleUrl: './submission-detail.component.scss',
 })
@@ -31,6 +34,7 @@ export class SubmissionDetailComponent implements AfterViewInit, OnInit {
   public sourceCode!: string;
   public statusColor!: string;
   public statusText!: string;
+  public isProcessing!: boolean;
 
   @ViewChild('editor', { static: false }) editor!: ElementRef;
   private platformId = inject(PLATFORM_ID);
@@ -41,7 +45,9 @@ export class SubmissionDetailComponent implements AfterViewInit, OnInit {
     private readonly _route: ActivatedRoute,
     private readonly _pageContextService: PageContextService,
     private readonly _submissionService: SubmissionService,
-    private readonly _utilsService: UtilsService
+    private readonly _utilsService: UtilsService,
+    private readonly _sseService: SSEService,
+    private readonly _toastService: ToastService
   ) {}
 
   ngOnInit(): void {
@@ -65,6 +71,43 @@ export class SubmissionDetailComponent implements AfterViewInit, OnInit {
           const sourceCode = this._utilsService.base64ToUtf8(
             response.source_code
           );
+
+          if (this._isProcessing()) {
+            this.statusText = '';
+            this.isProcessing = true;
+
+            this._sseService.connect(response.id).subscribe((event) => {
+              if (event.name === 'SUBMISSION_EVENT') {
+                const [newStatus, observation] = event.data.split('|');
+
+                this.submissionDetail = {
+                  ...this.submissionDetail,
+                  status: Number(newStatus),
+                  observation: observation,
+                };
+
+                this.isProcessing = false;
+
+                this.statusText = this._utilsService.translateSubmissionStatus(
+                  Number(newStatus)
+                );
+
+                if (Number(newStatus) === 2) {
+                  this._toastService.fire({
+                    title: 'Uhuuu!!!',
+                    message: 'Parabéns, o problema foi resolvido com sucesso!!',
+                    type: 'success',
+                  });
+                } else {
+                  this._toastService.fire({
+                    title: 'Ixeeeeee!!',
+                    message: `A submissão ${response.id} infelizamete foi finalizada sem sucesso. Tente novamente`,
+                    type: 'error',
+                  });
+                }
+              }
+            });
+          }
 
           this._view.dispatch({
             changes: {
@@ -107,5 +150,11 @@ export class SubmissionDetailComponent implements AfterViewInit, OnInit {
       state,
       parent: this.editor.nativeElement,
     });
+  }
+
+  private _isProcessing(): boolean {
+    return (
+      this.submissionDetail.status === 0 || this.submissionDetail.status === 1
+    );
   }
 }

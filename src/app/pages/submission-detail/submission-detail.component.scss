@@ -35,6 +35,12 @@ main {
 
         .value {
           width: 160px;
+
+          .loading {
+            margin-top: 3px;
+            display: flex;
+            justify-content: start;
+          }
         }
       }
     }

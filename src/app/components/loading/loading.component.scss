@@ -1,17 +1,4 @@
-.container {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-
-  gap: 10px;
-
-  .app-card {
-    width: 100%;
-    max-width: 49%;
-  }
-}
-
-/*.loading {
+.loading {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -19,8 +6,8 @@
 }
 
 .loading span {
-  width: 10px;
-  height: 10px;
+  width: 7px;
+  height: 7px;
   background-color: #555;
   border-radius: 50%;
   display: inline-block;
@@ -48,5 +35,4 @@
     transform: translateY(-10px);
     opacity: 1;
   }
-}*/
-
+}

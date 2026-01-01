@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { CategoryCardComponent } from '../../components/category-card/category-card.component';
 import { ICategory } from '../../shared/models/interfaces/category.interface';
 import { CategoryService } from '../../services/category.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-categories',
@@ -22,7 +23,8 @@ export class CategoriesComponent implements OnInit {
 
   constructor(
     private readonly _categoryService: CategoryService,
-    private readonly _router: Router
+    private readonly _router: Router,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -33,6 +35,10 @@ export class CategoriesComponent implements OnInit {
 
   public goToProblemList(category: ICategory) {
     this._router.navigate([`problems/${category.id}`]);
+  }
+
+  success() {
+    this.toastr.success('Deu tudo certo!', 'Sucesso');
   }
 
   public getCardColor(id: number): string {
