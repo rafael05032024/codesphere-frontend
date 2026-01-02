@@ -8,6 +8,14 @@
   font-size: 0.5rem !important;
 }
 
+.toast-error {
+  font-size: 0.5rem !important;
+}
+
+.toast-error::before {
+  font-size: 0.5rem !important;
+}
+
 .toast-container .ngx-toastr {
   width: 450px;      /* 👈 largura fixa */
 }

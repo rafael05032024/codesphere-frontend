@@ -7,6 +7,11 @@
   justify-content: center;
   align-items: center;
 
+  .text-error {
+    color: #e74c3c;
+    font-size: 0.5rem;
+  }
+
   .loading-container {
     display: flex;
     align-items: center;

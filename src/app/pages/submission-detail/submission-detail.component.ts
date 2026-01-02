@@ -20,6 +20,7 @@ import { SubmissionService } from '../../services/submission.service';
 import { SSEService } from '../../services/sse.service';
 import { ToastService } from '../../services/toast.service';
 import { LoadingComponent } from '../../components/loading/loading.component';
+import { timer } from 'rxjs';
 
 @Component({
   selector: 'app-submission-detail',
@@ -40,6 +41,7 @@ export class SubmissionDetailComponent implements AfterViewInit, OnInit {
   private platformId = inject(PLATFORM_ID);
 
   private _view!: EditorView;
+  private _eventReceived!: boolean;
 
   constructor(
     private readonly _route: ActivatedRoute,
@@ -78,33 +80,37 @@ export class SubmissionDetailComponent implements AfterViewInit, OnInit {
 
             this._sseService.connect(response.id).subscribe((event) => {
               if (event.name === 'SUBMISSION_EVENT') {
-                const [newStatus, observation] = event.data.split('|');
+                timer(1500).subscribe(() => {
+                  this._submissionService
+                    .getById(response.id)
+                    .subscribe((_submission) => {
+                      this.isProcessing = false;
 
-                this.submissionDetail = {
-                  ...this.submissionDetail,
-                  status: Number(newStatus),
-                  observation: observation,
-                };
+                      this.submissionDetail = {
+                        ..._submission,
+                      };
 
-                this.isProcessing = false;
+                      this.statusText =
+                        this._utilsService.translateSubmissionStatus(
+                          Number(_submission.status)
+                        );
 
-                this.statusText = this._utilsService.translateSubmissionStatus(
-                  Number(newStatus)
-                );
-
-                if (Number(newStatus) === 2) {
-                  this._toastService.fire({
-                    title: 'Uhuuu!!!',
-                    message: 'Parabéns, o problema foi resolvido com sucesso!!',
-                    type: 'success',
-                  });
-                } else {
-                  this._toastService.fire({
-                    title: 'Ixeeeeee!!',
-                    message: `A submissão ${response.id} infelizamete foi finalizada sem sucesso. Tente novamente`,
-                    type: 'error',
-                  });
-                }
+                      if (Number(_submission.status) === 2) {
+                        this._toastService.fire({
+                          title: 'Uhuuu!!!',
+                          message:
+                            'Parabéns, o problema foi resolvido com sucesso!!',
+                          type: 'success',
+                        });
+                      } else {
+                        this._toastService.fire({
+                          title: 'Ixeeeeee!!',
+                          message: `A submissão ${response.id} infelizamete foi finalizada sem sucesso. Tente novamente`,
+                          type: 'error',
+                        });
+                      }
+                    });
+                });
               }
             });
           }

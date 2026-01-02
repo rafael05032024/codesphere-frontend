@@ -20,14 +20,14 @@ export class SSEService {
         eventSource.addEventListener(name, (event: MessageEvent) => {
           if (
             !this._map[name] ||
-            new Date().getTime() - this._map[name].getTime() > 500
+            new Date().getTime() - this._map[name].getTime() > 1000
           ) {
+            this._map[name] = new Date();
+
             observer.next({
               data: event.data,
               name: name,
             });
-
-            this._map[name] = new Date();
           }
         });
       });

@@ -1,5 +1,13 @@
-import { CommonModule, NgOptimizedImage } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 
 import { IColumn } from '../../shared/models/interfaces/column.interface';
 import { IRow } from '../../shared/models/interfaces/row.interface';
@@ -11,7 +19,7 @@ import { IRow } from '../../shared/models/interfaces/row.interface';
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss',
 })
-export class TableComponent {
+export class TableComponent implements OnInit, OnChanges {
   private readonly _pageSize = 25;
 
   public chunks: IRow[][] = [];
@@ -26,6 +34,16 @@ export class TableComponent {
   constructor() {}
 
   ngOnInit(): void {
+    this._loadTable();
+  }
+
+  ngOnChanges(): void {
+    this.chunks = [];
+
+    this._loadTable();
+  }
+
+  private _loadTable(): void {
     let chunkSize = this._pageSize;
     let aux = [];
 

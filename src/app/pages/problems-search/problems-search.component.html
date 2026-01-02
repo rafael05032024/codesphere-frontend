@@ -1,0 +1,12 @@
+<div class="search-container">
+  <div class="input-container">
+    <input (keydown.enter)="handleSearchClick()" placeholder="1323, Soma Simples, Ad-Hoc, ..." [(ngModel)]="term" />
+  </div>
+
+  <button (click)="handleSearchClick()">
+    Buscar
+  </button>
+</div>
+
+<app-table (rowClickEvent)="goToDetail($event)" [columns]="columns" [rows]="rows" [totalRecords]="rows.length"
+  *ngIf="showTable"></app-table>

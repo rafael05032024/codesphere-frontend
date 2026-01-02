@@ -7,6 +7,7 @@ import { CategoriesComponent } from './pages/categories/categories.component';
 import { authGuard } from './shared/guards/auth.guard';
 import { ProblemsComponent } from './pages/problems/problems.component';
 import { SubmissionsComponent } from './pages/submissions/submissions.component';
+import { ProblemsSearchComponent } from './pages/problems-search/problems-search.component';
 
 export const routes: Routes = [
   {
@@ -35,12 +36,23 @@ export const routes: Routes = [
     },
   },
   {
+    path: 'problems',
+    component: ProblemsSearchComponent,
+    data: {
+      title: 'Problemas',
+      subtitle: 'Procure um problema específico para resolver.',
+      color: '#4cabb9',
+      hideProfile: false,
+      maxWidth: false,
+    },
+  },
+  {
     path: 'submissions',
     component: SubmissionsComponent,
     data: {
       title: 'Submissões',
       subtitle: 'Aqui você pode encontrar todas as suas submissões.',
-      color: '#4cabb9',
+      color: '#34495e',
       hideProfile: false,
       maxWidth: false,
     },

@@ -4,15 +4,18 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { GitHubOAuthService } from '../../../services/github-oauth.service';
 import { switchMap } from 'rxjs';
 import { UserService } from '../../../services/user.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-auth',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './github.component.html',
   styleUrl: './github.component.scss',
 })
 export class GitHubComponent implements OnInit {
+  public isError = false;
+
   constructor(
     private readonly _activatedRoute: ActivatedRoute,
     private readonly _router: Router,
@@ -21,14 +24,17 @@ export class GitHubComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.isError = false;
+
     this._activatedRoute.queryParams.subscribe((params) => {
       const code = params['code'] as string;
 
       this._gitHubOAuthService
         .handleCallback(code)
         .pipe(switchMap(() => this._userSerivce.load()))
-        .subscribe(() => {
-          this._router.navigate(['categories']);
+        .subscribe({
+          next: () => this._router.navigate(['categories']),
+          error: () => (this.isError = true),
         });
     });
   }

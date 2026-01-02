@@ -35,11 +35,12 @@
 
   .logo {
     height: 100%;
-    width: 60%;
+    width: 55%;
 
     background-image: url('../../../assets/images/bg3.png');
     background-position: center;
-    background-size: contain;
+    background-size: cover;
+    background-repeat: no-repeat;
   }
 
   .login-container {
