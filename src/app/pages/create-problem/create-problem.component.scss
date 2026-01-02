@@ -1,0 +1,138 @@
+.container {
+  width: 100%;
+  height: 100%;
+
+  .form {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+  }
+
+  .input {
+    width: 100%;
+
+    label {
+      font-size: .4rem;
+      color: black;
+      font-weight: bold;
+    }
+
+    .input-container {
+      border: 1px solid #bbb;
+      border-radius: 3px;
+
+      padding: 8px;
+      flex: 1;
+
+      display: flex;
+      align-items: center;
+
+      textarea {
+        width: 100%;
+        font-family: 'Ubuntu';
+        color: #454545;
+
+        border: none;
+
+        outline: none;
+
+        background: transparent;
+      }
+
+      select {
+        width: 100%;
+        height: 100%;
+
+        outline: none;
+        border: none;
+      }
+
+      input {
+        width: 100%;
+        height: 100%;
+
+        font-family: 'Ubuntu';
+        color: #454545;
+
+        border: none;
+
+        outline: none;
+
+        background: transparent;
+      }
+    }
+  }
+
+  footer {
+    width: 100%;
+
+    display: flex;
+    justify-content: end;
+
+    .submit-button {
+      background-color: #adce07;
+
+      margin-top: 10px;
+
+      border: 1px solid #8fa813;
+      border-bottom: #8fa813 solid 3px;
+
+      text-transform: uppercase;
+      color: white;
+      font-size: .4rem !important;
+      font-weight: bold;
+
+      cursor: pointer;
+
+      height: 40px;
+      width: 120px !important;
+    }
+  }
+
+}
+
+.upload-container {
+  max-width: 600px;
+  margin-top: 10px;
+  border-radius: 12px;
+  color: #c9d1d9;
+}
+
+.upload-btn,
+.send-btn {
+  background: #238636;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.upload-btn:hover,
+.send-btn:hover {
+  background: #2ea043;
+}
+
+.send-btn:disabled {
+  background: #30363d;
+  cursor: not-allowed;
+}
+
+.file-info {
+  margin-top: 12px;
+  font-size: 14px;
+}
+
+.file-preview {
+  margin-top: 16px;
+  padding: 12px;
+  background: #161b22;
+  border-radius: 6px;
+  max-height: 200px;
+  overflow: auto;
+  font-family: monospace;
+  font-size: 13px;
+}
+

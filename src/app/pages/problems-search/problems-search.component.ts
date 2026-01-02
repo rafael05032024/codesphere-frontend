@@ -67,6 +67,10 @@ export class ProblemsSearchComponent implements OnInit {
     this._router.navigate([`problem/${id}`]);
   }
 
+  public goToCreateProblem(): void {
+    this._router.navigate([`problem`]);
+  }
+
   private _loadTable(): void {
     this.rows = [];
 

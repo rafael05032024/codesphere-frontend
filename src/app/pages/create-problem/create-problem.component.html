@@ -1,0 +1,71 @@
+<main class="container">
+
+  <div class="form">
+    <div class="input">
+      <label for="title">Título</label>
+      <div class="input-container">
+        <input [(ngModel)]="title" id="title" type="text" placeholder="Título" />
+      </div>
+    </div>
+
+    <div class="input w20" style="max-width: 22%;">
+      <label for="categories">Categoria</label>
+      <div class="input-container">
+        <select id="categories" [(ngModel)]="categoryId">
+          <option [value]="category.id" *ngFor="let category of categories">{{ category.name }}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="input">
+    <label for="description">Descrição</label>
+
+    <div class="input-container">
+      <textarea [(ngModel)]="description" id="description" type="text" placeholder="Descrição" rows="15"></textarea>
+    </div>
+  </div>
+
+
+  <div class="input">
+    <label for="input_text">Texto Entrada</label>
+
+    <div class="input-container">
+      <textarea [(ngModel)]="inputText" id="input_text" type="text" placeholder="Texto Entrada" rows="8"></textarea>
+    </div>
+  </div>
+
+  <div class="input">
+    <label for="output_text">Texto Saída</label>
+
+    <div class="input-container">
+      <textarea [(ngModel)]="outputText" id="outpur_text" type="text" placeholder="Texto Saída" rows="8"></textarea>
+    </div>
+  </div>
+
+
+  <div class="problem-test-case-container">
+    <div class="upload-container">
+      <input #fileInput type="file" accept=".txt" hidden (change)="onFileSelected($event)" />
+
+      <button class="upload-btn" (click)="fileInput.click()">
+        📄 Selecionar arquivo TXT
+      </button>
+
+      <div *ngIf="fileName" class="file-info">
+        <strong>Arquivo:</strong> {{ fileName }}
+      </div>
+
+      <pre *ngIf="fileContent" class="file-preview">
+{{ fileContent }}
+  </pre>
+    </div>
+  </div>
+
+  <footer>
+    <button class="submit-button" (click)="createProblem()">
+      Submter
+    </button>
+  </footer>
+
+</main>

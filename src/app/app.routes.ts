@@ -8,6 +8,7 @@ import { authGuard } from './shared/guards/auth.guard';
 import { ProblemsComponent } from './pages/problems/problems.component';
 import { SubmissionsComponent } from './pages/submissions/submissions.component';
 import { ProblemsSearchComponent } from './pages/problems-search/problems-search.component';
+import { CreateProblemComponent } from './pages/create-problem/create-problem.component';
 
 export const routes: Routes = [
   {
@@ -24,6 +25,18 @@ export const routes: Routes = [
     data: {
       hideProfile: true,
       maxWidth: true,
+    },
+  },
+  {
+    path: 'problem',
+    component: CreateProblemComponent,
+    data: {
+      title: 'Criar um problema',
+      subtitle:
+        'Crie um problema, desafie outros devs e me ajude a fazer essa plataforma crescer.',
+      color: '#52af18',
+      hideProfile: false,
+      maxWidth: false,
     },
   },
   {

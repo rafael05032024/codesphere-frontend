@@ -8,5 +8,9 @@
   </button>
 </div>
 
+<button (click)="goToCreateProblem()">
+  Criar um problema
+</button>
+
 <app-table (rowClickEvent)="goToDetail($event)" [columns]="columns" [rows]="rows" [totalRecords]="rows.length"
   *ngIf="showTable"></app-table>

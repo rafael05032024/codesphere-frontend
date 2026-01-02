@@ -41,7 +41,6 @@ export class SubmissionDetailComponent implements AfterViewInit, OnInit {
   private platformId = inject(PLATFORM_ID);
 
   private _view!: EditorView;
-  private _eventReceived!: boolean;
 
   constructor(
     private readonly _route: ActivatedRoute,
