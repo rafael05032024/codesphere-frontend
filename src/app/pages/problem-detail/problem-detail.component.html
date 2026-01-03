@@ -38,13 +38,15 @@
   <aside class="submission-container">
     <div class="select-container">
       <span class="label">Linguagem</span>
-      <select>
-        <option value="c">C</option>
+      <select [(ngModel)]="languageId" (change)="handleLanguageChange()">
+        <option [value]="lang.id" *ngFor="let lang of languages">{{ lang.name }}</option>
       </select>
 
     </div>
 
-    <div #editor class="editor"></div>
+    <!--<div #editor class="editor"></div>-->
+
+    <app-code-editor *ngIf="!!languages"></app-code-editor>
 
     <div class="submission-footer">
       <div class="box-information">

@@ -11,6 +11,7 @@ import { cpp } from '@codemirror/lang-cpp';
 import { syntaxHighlighting } from '@codemirror/language';
 import { CodeModel } from '@ngstack/code-editor';
 import { EditorView } from '@codemirror/view';
+import { FormsModule } from '@angular/forms';
 
 import { PageContextService } from '../../services/page-context.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -18,42 +19,28 @@ import { UtilsService } from '../../services/utils-service';
 import { IProblemTestCase } from '../../shared/models/interfaces/problem-test-case.interface';
 import { ProblemService } from '../../services/problem.service';
 import { SubmissionService } from '../../services/submission.service';
+import { CodeEditorComponent } from '../../components/code-editor/code-editor.component';
+import { CodeEditorService } from '../../services/code-editor.service';
+import { LanguageService } from '../../services/language.service';
+import { ILanguage } from '../../shared/models/interfaces/language.interface';
 
 @Component({
   selector: 'app-problem',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, CodeEditorComponent, FormsModule],
   templateUrl: './problem-detail.component.html',
   styleUrl: './problem-detail.component.scss',
 })
 export class ProblemDetailComponent implements OnInit {
-  theme = 'vs-dark';
-
-  public model: CodeModel = {
-    language: 'json',
-    uri: 'main.json',
-    value: '{}',
-  };
-
-  public options = {
-    contextmenu: true,
-    minimap: {
-      enabled: true,
-    },
-  };
-
   private _problemId!: number;
-  private _view!: EditorView;
 
   public disableButton = false;
   public inputText!: string;
   public outputText!: string;
   public descriptionText!: string;
   public examples!: IProblemTestCase[];
-  public isBrowser!: boolean;
-
-  @ViewChild('editor', { static: false }) editor!: ElementRef;
-  private platformId = inject(PLATFORM_ID);
+  public languages!: ILanguage[];
+  public languageId!: number;
 
   constructor(
     private readonly _route: ActivatedRoute,
@@ -61,13 +48,29 @@ export class ProblemDetailComponent implements OnInit {
     private readonly _pageContextService: PageContextService,
     private readonly _utilsService: UtilsService,
     private readonly _problemService: ProblemService,
-    private readonly _submissionService: SubmissionService
+    private readonly _submissionService: SubmissionService,
+    private readonly _languageService: LanguageService,
+    private readonly _codeEditorService: CodeEditorService
   ) {}
 
   ngOnInit(): void {
     this._pageContextService.setPageContext({
       hideProfile: true,
       maxWidth: true,
+    });
+
+    this._languageService.list().subscribe((languages) => {
+      this.languages = languages;
+
+      const { id, template } = languages[0];
+
+      this.languageId = id;
+
+      this._codeEditorService.setCodeText(
+        this._utilsService.base64ToUtf8(template)
+      );
+
+      this._codeEditorService.setLanguage(this.languageId);
     });
 
     this._route.params.subscribe((params) => {
@@ -98,61 +101,30 @@ export class ProblemDetailComponent implements OnInit {
     });
   }
 
-  async ngAfterViewInit() {
-    if (!isPlatformBrowser(this.platformId)) return;
-
-    const [
-      { EditorState },
-      { EditorView, lineNumbers },
-      { defaultHighlightStyle },
-      { javascript },
-    ] = await Promise.all([
-      import('@codemirror/state'),
-      import('@codemirror/view'),
-      import('@codemirror/language'),
-      import('@codemirror/lang-javascript'),
-      import('@codemirror/lang-cpp'),
-    ]);
-
-    const state = EditorState.create({
-      doc: `#include <stdio.h>
-
-int main() {
-
-    /**
-     * Escreva a sua solução aqui
-     * Code your solution here
-     * Escriba su solución aquí
-     */
-
-    return 0;
-}`,
-      extensions: [
-        lineNumbers(),
-        cpp(),
-        syntaxHighlighting(defaultHighlightStyle),
-      ],
-    });
-
-    this._view = new EditorView({
-      state,
-      parent: this.editor.nativeElement,
-    });
-  }
-
-  public handleCodeSubmit() {
-    const sourceCode = this._utilsService.convertTextToBase64(
-      this._view.state.doc.toString()
-    );
-    const languageId = 52;
-    const problemId = this._problemId;
-
+  public handleCodeSubmit(): void {
     this.disableButton = true;
 
     this._submissionService
-      .create(problemId, languageId, sourceCode)
+      .create(
+        this._problemId,
+        this.languageId,
+        this._utilsService.convertTextToBase64(
+          this._codeEditorService.getCodeText()
+        )
+      )
       .subscribe(({ id }) => {
         this._router.navigate([`submission/${id}`]);
       });
+  }
+
+  public handleLanguageChange(): void {
+    const lang = this.languages.find(
+      (l) => l.id === Number(this.languageId)
+    ) as ILanguage;
+
+    this._codeEditorService.changeLanguage(lang.id);
+    this._codeEditorService.changeCodeText(
+      this._utilsService.base64ToUtf8(lang.template)
+    );
   }
 }
